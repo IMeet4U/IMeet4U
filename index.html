@@ -8,17 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Tailwind custom theme colors to match KKday style */
+    /* Custom theme colors with light blue primary */
     :root {
-      --kkday-orange: #FF6600;
-      --kkday-orange-light: #FFEDE0;
-      --kkday-gray: #F7F9FC;
-      --kkday-text: #333333;
+      --primary-blue: #3B82F6;       /* Blue-500 */
+      --primary-blue-light: #DBEAFE; /* Blue-100 */
+      --bg-gray: #F7F9FC;
+      --text-default: #333333;
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: var(--kkday-gray);
-      color: var(--kkday-text);
+      background-color: var(--bg-gray);
+      color: var(--text-default);
     }
   </style>
 </head>
@@ -26,25 +26,25 @@
   <!-- Header -->
   <header class="bg-white shadow-md">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-3xl font-bold text-[var(--kkday-orange)]">MEET U</h1>
+      <h1 class="text-3xl font-bold text-[var(--primary-blue)]">MEET U</h1>
       <nav>
         <ul class="flex space-x-6">
-          <li><a href="#about" class="text-gray-700 font-medium hover:text-[var(--kkday-orange)] transition">About</a></li>
-          <li><a href="#features" class="text-gray-700 font-medium hover:text-[var(--kkday-orange)] transition">Features</a></li>
-          <li><a href="#objectives" class="text-gray-700 font-medium hover:text-[var(--kkday-orange)] transition">Objectives</a></li>
-          <li><a href="#business-model" class="text-gray-700 font-medium hover:text-[var(--kkday-orange)] transition">Business Model</a></li>
-          <li><a href="#results" class="text-gray-700 font-medium hover:text-[var(--kkday-orange)] transition">Results</a></li>
+          <li><a href="#about" class="text-gray-700 font-medium hover:text-[var(--primary-blue)] transition">About</a></li>
+          <li><a href="#features" class="text-gray-700 font-medium hover:text-[var(--primary-blue)] transition">Features</a></li>
+          <li><a href="#objectives" class="text-gray-700 font-medium hover:text-[var(--primary-blue)] transition">Objectives</a></li>
+          <li><a href="#business-model" class="text-gray-700 font-medium hover:text-[var(--primary-blue)] transition">Business Model</a></li>
+          <li><a href="#results" class="text-gray-700 font-medium hover:text-[var(--primary-blue)] transition">Results</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <section id="hero" class="bg-[var(--kkday-orange)] text-white py-24">
+  <section id="hero" class="bg-[var(--primary-blue)] text-white py-24">
     <div class="container mx-auto px-6 text-center">
       <h2 class="text-5xl font-extrabold mb-4">Connect. Dine. Discover.</h2>
       <p class="text-xl mb-8 max-w-2xl mx-auto">Anonymous small dinner gatherings powered by data-driven matching, taking you from online acquaintance to offline interaction.</p>
-      <a href="#features" class="inline-block bg-white text-[var(--kkday-orange)] px-8 py-3 rounded-full font-semibold shadow-md hover:bg-gray-100 transition">Learn More</a>
+      <a href="#features" class="inline-block bg-white text-[var(--primary-blue)] px-8 py-3 rounded-full font-semibold shadow-md hover:bg-[var(--primary-blue-light)] transition">Learn More</a>
     </div>
   </section>
 
@@ -52,24 +52,24 @@
   <main class="container mx-auto px-6 py-16 space-y-20">
     <!-- About -->
     <section id="about">
-      <h3 class="text-3xl font-bold text-[var(--kkday-orange)] mb-4">Background & Motivation</h3>
+      <h3 class="text-3xl font-bold text-[var(--primary-blue)] mb-4">Background & Motivation</h3>
       <p class="text-lg leading-relaxed max-w-3xl">Modern people maintain online connections but rarely experience real-world interactions, leading to social isolation and weakened emotional bonds. “MEET U” offers structured and secure anonymous small dinner gatherings to foster deep interpersonal engagement.</p>
     </section>
 
     <!-- Features -->
     <section id="features">
-      <h3 class="text-3xl font-bold text-[var(--kkday-orange)] mb-4">Core Features</h3>
+      <h3 class="text-3xl font-bold text-[var(--primary-blue)] mb-4">Core Features</h3>
       <div class="grid md:grid-cols-3 gap-8">
         <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition">
-          <h4 class="text-2xl font-semibold mb-3">Anonymous Registration</h4>
+          <h4 class="text-2xl font-semibold mb-3 text-[var(--primary-blue)]">Anonymous Registration</h4>
           <p class="text-gray-600">Reduces social anxiety by revealing user identity only on event day, adding an element of novelty.</p>
         </div>
         <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition">
-          <h4 class="text-2xl font-semibold mb-3">Data-Driven Matching</h4>
+          <h4 class="text-2xl font-semibold mb-3 text-[var(--primary-blue)]">Data-Driven Matching</h4>
           <p class="text-gray-600">Leverages interest questionnaires and algorithms to pair like-minded participants.</p>
         </div>
         <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition">
-          <h4 class="text-2xl font-semibold mb-3">In-Person Gatherings</h4>
+          <h4 class="text-2xl font-semibold mb-3 text-[var(--primary-blue)]">In-Person Gatherings</h4>
           <p class="text-gray-600">Small dinner events that promote face-to-face interaction and meaningful connections.</p>
         </div>
       </div>
@@ -77,7 +77,7 @@
 
     <!-- Objectives -->
     <section id="objectives">
-      <h3 class="text-3xl font-bold text-[var(--kkday-orange)] mb-4">Research Objectives</h3>
+      <h3 class="text-3xl font-bold text-[var(--primary-blue)] mb-4">Research Objectives</h3>
       <ul class="list-disc pl-6 space-y-3 text-lg">
         <li>Evaluate the effect of anonymous gatherings on reducing social anxiety.</li>
         <li>Analyze how data-driven matching enhances user experience.</li>
@@ -87,28 +87,28 @@
 
     <!-- Business Model -->
     <section id="business-model">
-      <h3 class="text-3xl font-bold text-[var(--kkday-orange)] mb-4">Business Model</h3>
+      <h3 class="text-3xl font-bold text-[var(--primary-blue)] mb-4">Business Model</h3>
       <p class="text-lg leading-relaxed max-w-3xl">“MEET U” operates on a subscription model ($5–$10 per month), supplemented by advertising revenue and partner commissions. We collaborate with influencers and venue hosts to expand reach and engagement.</p>
     </section>
 
     <!-- Results -->
     <section id="results">
-      <h3 class="text-3xl font-bold text-[var(--kkday-orange)] mb-4">Expected Results</h3>
+      <h3 class="text-3xl font-bold text-[var(--primary-blue)] mb-4">Expected Results</h3>
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h4 class="text-xl font-semibold mb-2">Innovative Platform</h4>
+          <h4 class="text-xl font-semibold mb-2 text-[var(--primary-blue)]">Innovative Platform</h4>
           <p class="text-gray-600">Provides a structured and secure social experience.</p>
         </div>
         <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h4 class="text-xl font-semibold mb-2">Increased Engagement</h4>
+          <h4 class="text-xl font-semibold mb-2 text-[var(--primary-blue)]">Increased Engagement</h4>
           <p class="text-gray-600">Boosts user retention and event participation.</p>
         </div>
         <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h4 class="text-xl font-semibold mb-2">80% Success Rate</h4>
+          <h4 class="text-xl font-semibold mb-2 text-[var(--primary-blue)]">80% Success Rate</h4>
           <p class="text-gray-600">Most registered users are successfully matched and attend gatherings.</p>
         </div>
         <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h4 class="text-xl font-semibold mb-2">User-Friendly</h4>
+          <h4 class="text-xl font-semibold mb-2 text-[var(--primary-blue)]">User-Friendly</h4>
           <p class="text-gray-600">Simple and intuitive interface for seamless interaction.</p>
         </div>
       </div>
