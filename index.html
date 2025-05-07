@@ -1,9 +1,13 @@
+已思考 2 秒鐘
+
+
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMEET4U /title>
+  <title>IMEET4U - 全站 SPA</title>
   <style>
     /* CSS 變數 & Reset */
     :root {
@@ -23,95 +27,150 @@
     }
     *{margin:0;padding:0;box-sizing:border-box;}
     html{font-size:16px;}
-    body{font-family:'PingFang TC','Noto Sans TC',sans-serif;
-         color:var(--color-text);background:var(--color-bg);}
-    a, button {font-family:inherit;text-decoration:none;color:inherit;}
+    body{font-family:'PingFang TC','Noto Sans TC',sans-serif;color:var(--color-text);background:var(--color-bg);}
+    a, button { font-family:'PingFang TC','Noto Sans TC',sans-serif; text-decoration:none; color:inherit; background:none; border:none; }
     img{max-width:100%;height:auto;display:block;}
 
     /* Header */
-    header{background:var(--color-light);padding:1rem 2rem;
-      display:flex;align-items:center;justify-content:space-between;
-      box-shadow:0 2px 4px rgba(0,0,0,0.1);}
-    .logo{font-size:1.5rem;font-weight:bold;color:var(--color-primary);}
-    nav{display:flex;align-items:center;}
-    nav a, nav button{margin-left:1rem;font-weight:500;
-      color:var(--color-primary);cursor:pointer;background:none;border:none;}
-    .btn-primary{padding:.75rem 1.5rem;background:var(--color-primary);
-      color:var(--color-light);border-radius:var(--radius);}
+    header {
+      background:var(--color-light); padding:1rem 2rem;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+    }
+    .logo { font-size:1.5rem; font-weight:bold; color:var(--color-primary); }
+    nav { display:flex; align-items:center; }
+    nav a, nav button { margin-left:1rem; font-weight:500; color:var(--color-primary); cursor:pointer; }
+    .btn-primary {
+      padding:.75rem 1.5rem; background:var(--color-primary);
+      color:var(--color-light); border-radius:var(--radius);
+    }
+    #auth-area { display:flex; align-items:center; position:relative; }
+    #user-menu {
+      position:absolute; top:2.5rem; right:0;
+      background:var(--color-light); border:1px solid #ccc;
+      border-radius:4px; display:none;
+      box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    #user-menu button {
+      display:block; width:100%; text-align:left;
+      padding:.5rem 1rem; cursor:pointer;
+    }
 
     /* SPA Pages + Transitions */
-    .page{display:none;padding:2rem;opacity:0;transition:opacity .3s;}
-    .page.active{display:block;opacity:1;}
+    .page { display:none; padding:2rem; opacity:0; transition:opacity .3s; }
+    .page.active { display:block; opacity:1; }
 
     /* Hero */
-    .hero{text-align:center;padding:4rem 2rem;
+    .hero {
+      text-align:center; padding:4rem 2rem;
       background:linear-gradient(135deg,var(--color-primary) 0%,var(--color-secondary) 100%);
-      color:var(--color-light);}
-    .hero h1{font-size:2.5rem;line-height:1.2;margin-bottom:1rem;}
-    .hero p{margin-bottom:2rem;font-size:1.125rem;}
+      color:var(--color-light);
+    }
+    .hero h1 { font-size:2.5rem; line-height:1.2; margin-bottom:1rem; }
+    .hero p { margin-bottom:2rem; font-size:1.125rem; }
 
     /* Features */
-    .features{padding:3rem 2rem;background:var(--color-light);
-      display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
-    .feature-card{background:var(--color-light);padding:1.5rem;
-      border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);
-      text-align:center;transition:transform .2s;cursor:pointer;}
-    .feature-card:hover{transform:translateY(-5px);}
-    .feature-card h3{margin:1rem 0 .5rem;font-size:1.25rem;color:var(--color-primary);}
-    .feature-card p{font-size:1rem;color:var(--color-muted);}
+    .features {
+      padding:3rem 2rem; background:var(--color-light);
+      display:grid; gap:2rem;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    }
+    .feature-card {
+      background:var(--color-light); padding:1.5rem;
+      border-radius:var(--radius); box-shadow:0 1px 3px rgba(0,0,0,0.1);
+      text-align:center; transition:transform .2s; cursor:pointer;
+    }
+    .feature-card:hover { transform:translateY(-5px); }
+    .feature-card h3 { margin:1rem 0 .5rem; font-size:1.25rem; color:var(--color-primary); }
+    .feature-card p { font-size:1rem; color:var(--color-muted); }
 
     /* About */
-    #about p{max-width:600px;margin:1rem auto;line-height:1.6;color:var(--color-text);}
+    #about p { max-width:600px; margin:1rem auto; line-height:1.6; }
 
     /* Match */
-    #match .card{background:var(--color-light);padding:2rem;margin-bottom:1rem;
-      text-align:center;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);
-      touch-action: pan-y; user-select: none; }
-    #match .controls{text-align:center;margin-top:1rem;}
-    #match .controls button{font-size:1.5rem;margin:0 .5rem;}
+    #match .card {
+      background:var(--color-light); padding:2rem; margin-bottom:1rem;
+      text-align:center; border-radius:var(--radius);
+      box-shadow:0 1px 3px rgba(0,0,0,0.1);
+      touch-action:pan-y; user-select:none;
+    }
+    #match .controls { text-align:center; margin-top:1rem; }
+    #match .controls button { font-size:1.5rem; margin:0 .5rem; }
 
     /* Chat */
-    #chat #chat-window{background:var(--color-light);border:1px solid #ccc;
-      border-radius:4px;height:300px;overflow-y:auto;padding:1rem;}
-    #chat .input-group{display:flex;margin-top:1rem;max-width:400px;}
-    #chat input{flex:1;padding:.5rem;border:1px solid #ccc;border-radius:4px 0 0 4px;}
-    #chat button{padding:.5rem 1rem;border:1px solid #ccc;border-left:none;
-      border-radius:0 4px 4px 0;background:var(--color-light);cursor:pointer;}
+    #chat #chat-window {
+      background:var(--color-light); border:1px solid #ccc;
+      border-radius:4px; height:300px; overflow-y:auto; padding:1rem;
+    }
+    #chat .input-group { display:flex; margin-top:1rem; max-width:400px; }
+    #chat input {
+      flex:1; padding:.5rem; border:1px solid #ccc;
+      border-radius:4px 0 0 4px;
+    }
+    #chat button {
+      padding:.5rem 1rem; border:1px solid #ccc; border-left:none;
+      border-radius:0 4px 4px 0; background:var(--color-light); cursor:pointer;
+    }
 
     /* Forms */
-    .form-container{max-width:400px;margin:3rem auto;background:var(--color-light);
-      padding:2rem;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);}
-    .form-container label{display:block;margin-bottom:1rem;}
-    .form-container input,.form-container select,.form-container textarea{
-      width:100%;padding:.5rem;border:1px solid #ccc;border-radius:4px;}
-    .form-container button{width:100%;padding:.75rem;
-      background:var(--color-primary);color:var(--color-light);
-      border-radius:var(--radius);font-size:1rem;cursor:pointer;}
+    .form-container {
+      max-width:400px; margin:3rem auto;
+      background:var(--color-light); padding:2rem;
+      border-radius:var(--radius); box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    .form-container h2 { margin-bottom:1rem; }
+    .form-container label { display:block; margin-bottom:1rem; }
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+      width:100%; padding:.5rem; border:1px solid #ccc; border-radius:4px;
+    }
+    .form-container button {
+      width:100%; padding:.75rem; background:var(--color-primary);
+      color:var(--color-light); border-radius:var(--radius);
+      font-size:1rem; cursor:pointer;
+    }
 
-    /* Modal & Calendar */
-    .modal-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;
-      background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;}
-    .modal{background:var(--color-light);padding:2rem;border-radius:var(--radius);
-      max-width:500px;width:90%;max-height:90%;overflow:auto;}
-    .modal.active .modal-backdrop{display:flex;}
-    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
-    .calendar div{padding:.5rem;text-align:center;border-radius:4px;}
-    .calendar .header{font-weight:bold;color:var(--color-primary);}
+    /* Modal */
+    .modal-backdrop {
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.5); display:none;
+      align-items:center; justify-content:center;
+    }
+    .modal-backdrop.active { display:flex; }
+    .modal {
+      background:var(--color-light); padding:2rem;
+      border-radius:var(--radius);
+      max-width:500px; width:90%; max-height:90%; overflow:auto;
+    }
 
-    /* Dark Toggle */
-    #dark-toggle{font-size:1.2rem;}
+    /* Calendar */
+    .calendar {
+      display:grid; grid-template-columns:repeat(7,1fr); gap:5px;
+    }
+    .calendar .header {
+      font-weight:bold; color:var(--color-primary);
+    }
+    .calendar div {
+      padding:.5rem; text-align:center;
+      border-radius:4px; background:var(--color-light);
+    }
 
-    /* Responsive */
-    @media (max-width:768px){
-      header{padding:1rem;}
-      nav a,nav button{margin-left:.75rem;font-size:.9rem;}
-      .hero h1{font-size:2rem;}
-      .hero p{font-size:1rem;}
-      .features{padding:2rem 1rem;}
+    /* Footer */
+    footer {
+      text-align:center; padding:2rem 0; color:var(--color-muted);
+    }
+
+    @media(max-width:768px) {
+      header { padding:1rem; }
+      nav a, nav button { margin-left:.75rem; font-size:.9rem; }
+      .hero h1 { font-size:2rem; }
+      .hero p { font-size:1rem; }
+      .features { padding:2rem 1rem; }
     }
   </style>
 </head>
-<body>
+<body data-theme="light">
 
   <header>
     <div class="logo">IMEET4U</div>
@@ -123,10 +182,13 @@
       <a data-target="profile">個人檔案</a>
       <a data-target="settings">喜好設定</a>
       <a data-target="calendar">活動日曆</a>
-      <button id="q-btn" aria-label="性格問卷">問卷</button>
-      <button id="dark-toggle" aria-label="切換深色模式">🌙</button>
-      <a data-target="login">登入</a>
-      <a data-target="register" class="btn-primary">註冊</a>
+      <button id="q-btn">問卷</button>
+      <button id="dark-toggle">🌙</button>
+      <div id="auth-area">
+        <a data-target="login">登入</a>
+        <a data-target="register" class="btn-primary">註冊</a>
+      </div>
+      <div id="user-menu"></div>
     </nav>
   </header>
 
@@ -139,10 +201,26 @@
         <a class="btn-primary" data-target="register">立即加入</a>
       </div>
       <div class="features">
-        <div class="feature-card" data-target="match"><img src="icons/match.svg"><h3>配對系統</h3><p>滑動卡片，快速找到理想對象</p></div>
-        <div class="feature-card" data-target="chat"><img src="icons/chat.svg"><h3>即時聊天</h3><p>一對一聊天，感受真實互動</p></div>
-        <div class="feature-card" data-target="profile"><img src="icons/profile.svg"><h3>個人檔案</h3><p>展示最真實的自己</p></div>
-        <div class="feature-card" data-target="settings"><img src="icons/settings.svg"><h3>喜好設定</h3><p>自訂篩選條件，優化配對結果</p></div>
+        <div class="feature-card" data-target="match">
+          <img src="icons/match.svg" alt="配對系統">
+          <h3>配對系統</h3>
+          <p>滑動卡片，快速找到理想對象</p>
+        </div>
+        <div class="feature-card" data-target="chat">
+          <img src="icons/chat.svg" alt="即時聊天">
+          <h3>即時聊天</h3>
+          <p>一對一聊天，感受真實互動</p>
+        </div>
+        <div class="feature-card" data-target="profile">
+          <img src="icons/profile.svg" alt="個人檔案">
+          <h3>個人檔案</h3>
+          <p>展示最真實的自己</p>
+        </div>
+        <div class="feature-card" data-target="settings">
+          <img src="icons/settings.svg" alt="喜好設定">
+          <h3>喜好設定</h3>
+          <p>自訂篩選條件，優化配對結果</p>
+        </div>
       </div>
     </section>
 
@@ -153,26 +231,26 @@
     </section>
 
     <!-- Match -->
-    <section id="match" class="page" aria-live="polite">
+    <section id="match" class="page">
       <h2>配對系統</h2>
       <div id="swipe-container">
-        <div class="card" draggable="true">使用者 A</div>
-        <div class="card" draggable="true">使用者 B</div>
-        <div class="card" draggable="true">使用者 C</div>
+        <div class="card">使用者 A</div>
+        <div class="card">使用者 B</div>
+        <div class="card">使用者 C</div>
       </div>
       <div class="controls">
-        <button id="dislike" aria-label="不喜歡">👎</button>
-        <button id="like" aria-label="喜歡">👍</button>
+        <button id="dislike">👎</button>
+        <button id="like">👍</button>
       </div>
     </section>
 
     <!-- Chat -->
     <section id="chat" class="page">
       <h2>即時聊天</h2>
-      <div id="chat-window" aria-label="聊天訊息"></div>
+      <div id="chat-window"></div>
       <div class="input-group">
-        <input id="msg" type="text" placeholder="輸入訊息…" aria-label="輸入訊息">
-        <button id="send" aria-label="傳送訊息">傳送</button>
+        <input id="msg" type="text" placeholder="輸入訊息…">
+        <button id="send">傳送</button>
       </div>
     </section>
 
@@ -189,9 +267,13 @@
     <!-- Settings -->
     <section id="settings" class="page">
       <h2>篩選喜好</h2>
-      <form class="form-container" id="settings-form">
+      <form class="form-container" id="settings-form" novalidate>
         <label>性別偏好：
-          <select name="gender"><option value="all">不限</option><option value="female">女性</option><option value="male">男性</option></select>
+          <select name="gender">
+            <option value="all">不限</option>
+            <option value="female">女性</option>
+            <option value="male">男性</option>
+          </select>
         </label>
         <label>年齡範圍：
           <input type="number" name="ageMin" placeholder="最小" min="18" max="100"> –
@@ -242,10 +324,16 @@
       <h3 id="q-title">性格問卷</h3>
       <form id="q-form">
         <label>你喜歡戶外活動嗎？
-          <select name="outdoor"><option value="yes">是</option><option value="no">否</option></select>
+          <select name="outdoor">
+            <option value="yes">是</option>
+            <option value="no">否</option>
+          </select>
         </label>
         <label>你偏好哪種類型聚會？
-          <select name="theme"><option value="sports">運動</option><option value="entertainment">娛樂</option></select>
+          <select name="theme">
+            <option value="sports">運動</option>
+            <option value="entertainment">娛樂</option>
+          </select>
         </label>
         <button type="submit">儲存問卷</button>
         <button type="button" id="q-close">關閉</button>
@@ -254,98 +342,140 @@
   </div>
 
   <script>
-    // Dark mode
-    const theme = localStorage.getItem('theme')||'light';
-    document.documentElement.setAttribute('data-theme', theme);
+    // Deep color mode
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
     document.getElementById('dark-toggle').onclick = () => {
-      const cur = document.documentElement.getAttribute('data-theme');
-      const nxt = cur==='light'?'dark':'light';
-      document.documentElement.setAttribute('data-theme', nxt);
+      const cur = document.body.getAttribute('data-theme');
+      const nxt = cur === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', nxt);
       localStorage.setItem('theme', nxt);
     };
 
-    // Hash-based routing
-    function showPage(id){
-      document.querySelectorAll('.page').forEach(p=>{
-        p.classList.toggle('active', p.id===id);
-      });
+    // SPA Routing
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
     }
-    window.addEventListener('hashchange',()=>showPage(location.hash.slice(1)));
-    document.querySelectorAll('[data-target]').forEach(el=>{
-      el.onclick = ()=>location.hash = el.dataset.target;
+    window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
+    document.querySelectorAll('[data-target]').forEach(el => {
+      el.addEventListener('click', () => location.hash = el.dataset.target);
     });
-    if(location.hash) showPage(location.hash.slice(1));
+    if (location.hash) showPage(location.hash.slice(1));
     else location.hash = 'home';
 
     // Questionnaire Modal
     const qModal = document.getElementById('q-modal');
-    document.getElementById('q-btn').onclick = ()=> qModal.classList.add('active');
-    document.getElementById('q-close').onclick = ()=> qModal.classList.remove('active');
-    document.getElementById('q-form').onsubmit = e=>{
+    document.getElementById('q-btn').onclick = () => qModal.classList.add('active');
+    document.getElementById('q-close').onclick = () => qModal.classList.remove('active');
+    document.getElementById('q-form').onsubmit = e => {
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target));
-      localStorage.setItem('questionnaire', JSON.stringify(data));
+      localStorage.setItem('questionnaire', JSON.stringify(Object.fromEntries(new FormData(e.target))));
       alert('問卷已儲存');
       qModal.classList.remove('active');
     };
 
-    // Simple Calendar (current month)
+    // Auth area render
+    const authArea = document.getElementById('auth-area');
+    const userMenu = document.getElementById('user-menu');
+    function renderAuth() {
+      const user = localStorage.getItem('username');
+      if (user) {
+        authArea.innerHTML = `<button id="user-btn">${user}</button>`;
+        userMenu.innerHTML = `<button id="logout-btn">登出</button>`;
+        document.getElementById('user-btn').onclick = () => {
+          userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
+        };
+        document.getElementById('logout-btn').onclick = () => {
+          localStorage.removeItem('username');
+          userMenu.style.display = 'none';
+          renderAuth();
+          location.hash = 'home';
+        };
+      } else {
+        authArea.innerHTML = `<a data-target="login">登入</a><a data-target="register" class="btn-primary">註冊</a>`;
+      }
+    }
+    renderAuth();
+
+    // Login/Register simulation
+    document.getElementById('login-form').onsubmit = e => {
+      e.preventDefault();
+      const user = e.target.username.value.trim();
+      if (user) {
+        localStorage.setItem('username', user);
+        renderAuth();
+        location.hash = 'home';
+      }
+    };
+    document.getElementById('register-form').onsubmit = e => {
+      e.preventDefault();
+      const fm = e.target;
+      if (fm.password.value === fm.confirm_password.value) {
+        localStorage.setItem('username', fm.username.value.trim());
+        renderAuth();
+        location.hash = 'home';
+      } else {
+        alert('密碼與確認密碼不符');
+      }
+    };
+
+    // Simple Calendar
     const cal = document.getElementById('calendar-grid');
-    const now = new Date(), year=now.getFullYear(), month=now.getMonth();
-    const first = new Date(year,month,1).getDay(), days=new Date(year,month+1,0).getDate();
-    ['日','一','二','三','四','五','六'].forEach(d=>{
-      const div=document.createElement('div'); div.textContent=d; div.className='header'; cal.append(div);
+    const now = new Date(), y = now.getFullYear(), m = now.getMonth();
+    const firstDay = new Date(y, m, 1).getDay(), total = new Date(y, m+1, 0).getDate();
+    ['日','一','二','三','四','五','六'].forEach(d => {
+      const hd = document.createElement('div');
+      hd.textContent = d; hd.className = 'header'; cal.append(hd);
     });
-    for(let i=0;i<first;i++){cal.append(document.createElement('div'));}
-    for(let d=1;d<=days;d++){
-      const div=document.createElement('div'); div.textContent=d;
-      cal.append(div);
+    for (let i=0;i<firstDay;i++) cal.append(document.createElement('div'));
+    for (let d=1;d<=total;d++) {
+      const cell = document.createElement('div');
+      cell.textContent = d;
+      cal.append(cell);
     }
 
-    // Drag & Swipe Cards
+    // Match drag/swipe
     const swipeContainer = document.getElementById('swipe-container');
-    let dragEl=null, startX=0;
-    swipeContainer.querySelectorAll('.card').forEach(card=>{
-      card.addEventListener('pointerdown',e=>{
-        dragEl=card; startX=e.clientX;
+    let dragEl = null, startX = 0;
+    swipeContainer.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('pointerdown', e => {
+        dragEl = card; startX = e.clientX;
         card.setPointerCapture(e.pointerId);
       });
-      card.addEventListener('pointermove',e=>{
-        if(!dragEl) return;
-        const dx=e.clientX-startX;
-        dragEl.style.transform=`translateX(${dx}px) rotate(${dx/10}deg)`;
+      card.addEventListener('pointermove', e => {
+        if (!dragEl) return;
+        const dx = e.clientX - startX;
+        dragEl.style.transform = `translateX(${dx}px) rotate(${dx/10}deg)`;
       });
-      card.addEventListener('pointerup',e=>{
-        if(!dragEl) return;
-        const dx=e.clientX-startX;
-        if(Math.abs(dx)>100){
-          dragEl.remove();
-        } else dragEl.style.transform='';
+      card.addEventListener('pointerup', e => {
+        if (!dragEl) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 100) dragEl.remove();
+        else dragEl.style.transform = '';
         dragEl.releasePointerCapture(e.pointerId);
-        dragEl=null;
+        dragEl = null;
       });
     });
-
-    // Match buttons
-    document.getElementById('like').onclick =
-    document.getElementById('dislike').onclick = ()=>{
-      const c=swipeContainer.querySelector('.card');
-      if(c) c.remove();
+    document.getElementById('like').onclick = document.getElementById('dislike').onclick = () => {
+      const c = swipeContainer.querySelector('.card');
+      if (c) c.remove();
     };
 
-    // Chat
-    const chatWin = document.getElementById('chat-window');
-    document.getElementById('send').onclick = ()=>{
-      const inp=document.getElementById('msg');
-      if(!inp.value) return;
-      const d=document.createElement('div'); d.textContent='我：'+inp.value;
-      chatWin.append(d); inp.value=''; chatWin.scrollTop=chatWin.scrollHeight;
+    // Chat send
+    document.getElementById('send').onclick = () => {
+      const inp = document.getElementById('msg'), win = document.getElementById('chat-window');
+      if (!inp.value) return;
+      const div = document.createElement('div');
+      div.textContent = '我：' + inp.value;
+      win.append(div);
+      inp.value = '';
+      win.scrollTop = win.scrollHeight;
     };
 
-    // Form validation
-    ['profile-form','settings-form','login-form','register-form'].forEach(id=>{
-      document.getElementById(id).onsubmit = e=>{
-        if(!e.target.checkValidity()){
+    // Form validations
+    ['profile-form','settings-form'].forEach(id => {
+      document.getElementById(id).onsubmit = e => {
+        if (!e.target.checkValidity()) {
           e.preventDefault();
           alert('請完整填寫並符合格式');
         }
@@ -354,3 +484,4 @@
   </script>
 </body>
 </html>
+```
