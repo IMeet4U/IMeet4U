@@ -5,43 +5,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IMEET4U - Discover Meaningful Connections</title>
   <style>
-    /* Reset & base */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { font-size: 16px; }
-    body { font-family: 'PingFang TC', 'Noto Sans TC', sans-serif; color: #333; background: #f7f7f7; }
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; height: auto; display: block; }
-    button { cursor: pointer; border: none; }
+    /* Reset & base styles */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { font-size:16px; }
+    body { font-family:'PingFang TC','Noto Sans TC',sans-serif; color:#333; background:#f7f7f7; }
+    a { text-decoration:none; color:inherit; }
+    img { max-width:100%; height:auto; display:block; }
+    button { cursor:pointer; border:none; }
 
-    /* Layout */
-    header { background: #ffffff; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .logo { font-size: 1.5rem; font-weight: bold; color: #FF6B6B; }
-    nav a { margin-left: 1rem; font-weight: 500; }
-    .btn-primary { background: #FF6B6B; color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; }
+    /* Header */
+    header {
+      background:#fff; padding:1rem 2rem;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+    }
+    .logo { font-size:1.5rem; font-weight:bold; color:#FF6B6B; }
+    header nav { display:flex; }
+    header nav a {
+      margin-left:1rem; font-weight:500; color:#FF6B6B; cursor:pointer;
+    }
+    .btn-primary {
+      background:#FF6B6B; color:#fff;
+      padding:0.75rem 1.5rem; border-radius:8px; font-size:1rem;
+    }
 
-    /* Hero */
-    .hero { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%); color: #fff; }
-    .hero h1 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem; }
-    .hero p { margin-bottom: 2rem; font-size: 1.125rem; }
+    /* SPA pages */
+    .page { display:none; padding:2rem; }
+    .page.active { display:block; }
 
-    /* Features */
-    .features { padding: 3rem 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-    .feature-card { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
-    .feature-card h3 { margin: 1rem 0 0.5rem; font-size: 1.25rem; color: #FF6B6B; }
-    .feature-card p { font-size: 1rem; color: #666; }
+    /* Hero Section */
+    .hero {
+      text-align:center; padding:4rem 2rem;
+      background:linear-gradient(135deg,#FF6B6B 0%,#4ECDC4 100%);
+      color:#fff;
+    }
+    .hero h1 { font-size:2.5rem; line-height:1.2; margin-bottom:1rem; }
+    .hero p { margin-bottom:2rem; font-size:1.125rem; }
 
-    /* Responsive nav (mobile) */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2rem; }
-      .hero p { font-size: 1rem; }
-      header { padding: 1rem; }
-      nav a { margin-left: 0.75rem; font-size: 0.9rem; }
+    /* Match (card swipe) */
+    #match .card {
+      background:#fff; padding:2rem; margin-bottom:1rem; text-align:center;
+      border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    #match .controls { text-align:center; margin-top:1rem; }
+    #match .controls button { font-size:1.5rem; margin:0 .5rem; }
+
+    /* Chat */
+    #chat #chat-window {
+      background:#fff; border:1px solid #ccc; border-radius:4px;
+      height:300px; overflow-y:auto; padding:1rem;
+    }
+    #chat .input-group { display:flex; margin-top:1rem; max-width:400px; }
+    #chat input {
+      flex:1; padding:.5rem; border:1px solid #ccc; border-radius:4px 0 0 4px;
+    }
+    #chat button {
+      padding:.5rem 1rem; border:1px solid #ccc; border-left:none;
+      border-radius:0 4px 4px 0; background:#fff;
+    }
+
+    /* Forms */
+    form label { display:block; margin-bottom:1rem; }
+    form input, form select, form textarea {
+      width:100%; padding:.5rem; border:1px solid #ccc; border-radius:4px;
+    }
+
+    /* Responsive */
+    @media (max-width:768px) {
+      header { padding:1rem; }
+      header nav a { margin-left:.75rem; font-size:.9rem; }
+      .hero h1 { font-size:2rem; }
+      .hero p { font-size:1rem; }
     }
   </style>
 </head>
 <body>
+
   <header>
     <div class="logo">IMEET4U</div>
+    <nav>
+      <a data-target="home">首頁</a>
+      <a data-target="match">配對系統</a>
+      <a data-target="chat">即時聊天</a>
+      <a data-target="profile">個人檔案</a>
+      <a data-target="settings">喜好設定</a>
+    </nav>
     <nav>
       <a href="login.html">登入</a>
       <a href="register.html" class="btn-primary">註冊</a>
@@ -49,40 +97,112 @@
   </header>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Home / Hero -->
+    <section id="home" class="page active hero">
       <h1>Discover<br>Meaningful<br>Connections</h1>
       <p>加入 IMEET4U，開始你的浪漫旅程</p>
       <a href="register.html" class="btn-primary">立即加入</a>
     </section>
 
-    <!-- Features Section -->
-    <section class="features">
-      <div class="feature-card">
-        <img src="icons/match.svg" alt="配對系統" />
-        <h3>配對系統</h3>
-        <p>滑動卡片，快速找到理想對象</p>
+    <!-- 配對系統 -->
+    <section id="match" class="page">
+      <h2>配對系統</h2>
+      <div id="swipe-container" style="max-width:320px;margin:2rem auto;">
+        <div class="card">使用者 A</div>
+        <div class="card">使用者 B</div>
+        <div class="card">使用者 C</div>
       </div>
-      <div class="feature-card">
-        <img src="icons/chat.svg" alt="即時聊天" />
-        <h3>即時聊天</h3>
-        <p>一對一聊天，感受真實互動</p>
+      <div class="controls">
+        <button id="dislike">👎</button>
+        <button id="like">👍</button>
       </div>
-      <div class="feature-card">
-        <img src="icons/profile.svg" alt="個人檔案" />
-        <h3>個人檔案</h3>
-        <p>展示最真實的自己</p>
+    </section>
+
+    <!-- 即時聊天 -->
+    <section id="chat" class="page">
+      <h2>即時聊天</h2>
+      <div id="chat-window"></div>
+      <div class="input-group">
+        <input id="msg" type="text" placeholder="輸入訊息…" />
+        <button id="send">傳送</button>
       </div>
-      <div class="feature-card">
-        <img src="icons/settings.svg" alt="喜好設定" />
-        <h3>喜好設定</h3>
-        <p>自訂篩選條件，優化配對結果</p>
-      </div>
+    </section>
+
+    <!-- 個人檔案 -->
+    <section id="profile" class="page">
+      <h2>我的檔案</h2>
+      <form id="profile-form" style="max-width:400px;">
+        <label>名字：
+          <input type="text" name="name" value="忠叡 蔡" />
+        </label>
+        <label>自我介紹：
+          <textarea name="bio">這裡寫自我介紹…</textarea>
+        </label>
+        <button type="submit" class="btn-primary">儲存</button>
+      </form>
+    </section>
+
+    <!-- 喜好設定 -->
+    <section id="settings" class="page">
+      <h2>篩選喜好</h2>
+      <form id="settings-form" style="max-width:400px;">
+        <label>性別偏好：
+          <select name="gender">
+            <option value="all">不限</option>
+            <option value="female">女性</option>
+            <option value="male">男性</option>
+          </select>
+        </label>
+        <label>年齡範圍：
+          <input type="number" name="ageMin" placeholder="最小" style="width:45%;display:inline-block;" /> –
+          <input type="number" name="ageMax" placeholder="最大" style="width:45%;display:inline-block;" />
+        </label>
+        <button type="submit" class="btn-primary">儲存設定</button>
+      </form>
     </section>
   </main>
 
-  <footer style="text-align:center; padding:2rem 0; color:#999;">
+  <footer style="text-align:center;padding:2rem 0;color:#999;">
     &copy; 2025 IMEET4U. All Rights Reserved.
   </footer>
+
+  <script>
+    // SPA 切換
+    document.querySelectorAll('header nav a[data-target]').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tgt = tab.dataset.target;
+        document.querySelectorAll('.page').forEach(p => {
+          p.classList.toggle('active', p.id === tgt);
+        });
+      });
+    });
+
+    // 配對系統互動
+    const container = document.getElementById('swipe-container');
+    document.getElementById('like').onclick =
+    document.getElementById('dislike').onclick = () => {
+      const card = container.querySelector('.card');
+      if (card) container.removeChild(card);
+    };
+
+    // 聊天互動
+    const chatWin = document.getElementById('chat-window');
+    document.getElementById('send').onclick = () => {
+      const input = document.getElementById('msg');
+      if (!input.value) return;
+      const msgDiv = document.createElement('div');
+      msgDiv.textContent = '我：' + input.value;
+      chatWin.appendChild(msgDiv);
+      input.value = '';
+      chatWin.scrollTop = chatWin.scrollHeight;
+    };
+
+    // 表單示意
+    document.getElementById('profile-form')
+      .addEventListener('submit', e => { e.preventDefault(); alert('檔案已儲存'); });
+    document.getElementById('settings-form')
+      .addEventListener('submit', e => { e.preventDefault(); alert('喜好設定已更新'); });
+  </script>
 </body>
 </html>
+```
