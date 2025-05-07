@@ -1,166 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IMeet4U – Discover Meaningful Connections</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMEET4U - Discover Meaningful Connections</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #312F64; }
+    /* Reset & base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; }
+    body { font-family: 'PingFang TC', 'Noto Sans TC', sans-serif; color: #333; background: #f7f7f7; }
     a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    button { cursor: pointer; border: none; }
 
-    /* Header */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 80px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-    .logo img {
-      width: 36px; height: 36px; margin-right: 12px;
-    }
-    .logo span {
-      font-size: 20px;
-      font-weight: 600;
-    }
-    .nav-items {
-      display: flex;
-      gap: 32px;
-      font-size: 14px;
-    }
-    .nav-items .item {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    .nav-items .item span.arrow {
-      margin-left: 4px;
-      font-size: 10px;
-      line-height: 10px;
-    }
-    .nav-icons {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-    .nav-icons img {
-      width: 20px; height: 20px; cursor: pointer;
-    }
-    .nav-icons button {
-      padding: 6px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      border: 2px solid #3DBE64;
-      border-radius: 50px;
-      background: #fff;
-      color: #3DBE64;
-      cursor: pointer;
-    }
+    /* Layout */
+    header { background: #ffffff; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .logo { font-size: 1.5rem; font-weight: bold; color: #FF6B6B; }
+    nav a { margin-left: 1rem; font-weight: 500; }
+    .btn-primary { background: #FF6B6B; color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; }
 
     /* Hero */
-    .hero {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 60px 80px;
-    }
-    .hero-text h1 {
-      font-size: 48px;
-      line-height: 1.2;
-      margin-bottom: 32px;
-    }
-    .hero-text h1 .highlight {
-      color: #3DBE64;
-    }
-    .hero-text .btn-group {
-      display: flex;
-      gap: 20px;
-    }
-    .hero-text button {
-      padding: 14px 40px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 50px;
-      cursor: pointer;
-    }
-    .btn-login {
-      background: #3DBE64;
-      color: #fff;
-      border: none;
-    }
-    .btn-find {
-      background: transparent;
-      color: #312F64;
-      border: 2px solid #312F64;
-    }
-    .hero-image img {
-      max-width: 100%;
-      height: auto;
-    }
+    .hero { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%); color: #fff; }
+    .hero h1 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem; }
+    .hero p { margin-bottom: 2rem; font-size: 1.125rem; }
 
-    /* Footer */
-    .footer {
-      background: #E0E0E0;
-      padding: 40px 80px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .footer .brand {
-      font-size: 36px;
-      font-weight: 700;
-      color: #3DBE64;
+    /* Features */
+    .features { padding: 3rem 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+    .feature-card { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
+    .feature-card h3 { margin: 1rem 0 0.5rem; font-size: 1.25rem; color: #FF6B6B; }
+    .feature-card p { font-size: 1rem; color: #666; }
+
+    /* Responsive nav (mobile) */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      header { padding: 1rem; }
+      nav a { margin-left: 0.75rem; font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">
-      <img src="logo.png" alt="Logo">
-      <span>Educrat</span>
-    </div>
-    <nav class="nav-items">
-      <div class="item">Explore <span class="arrow">▾</span></div>
-      <div class="item">Explore <span class="arrow">▾</span></div>
-      <div class="item">Explore <span class="arrow">▾</span></div>
-      <div class="item">Explore <span class="arrow">▾</span></div>
-      <div class="item">Explore <span class="arrow">▾</span></div>
+  <header>
+    <div class="logo">IMEET4U</div>
+    <nav>
+      <a href="login.html">登入</a>
+      <a href="register.html" class="btn-primary">註冊</a>
     </nav>
-    <div class="nav-icons">
-      <img src="search-icon.png" alt="Search">
-      <img src="cart-icon.png" alt="Cart">
-      <button>Log in</button>
-    </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-text">
-      <h1>
-        Discover<br>
-        <span class="highlight">Meaningful</span><br>
-        Connections
-      </h1>
-      <div class="btn-group">
-        <button class="btn-login">Login</button>
-        <button class="btn-find">Find</button>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Discover<br>Meaningful<br>Connections</h1>
+      <p>加入 IMEET4U，開始你的浪漫旅程</p>
+      <a href="register.html" class="btn-primary">立即加入</a>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="feature-card">
+        <img src="icons/match.svg" alt="配對系統" />
+        <h3>配對系統</h3>
+        <p>滑動卡片，快速找到理想對象</p>
       </div>
-    </div>
-    <div class="hero-image">
-      <img src="hero-illustration.png" alt="Anna, 27">
-    </div>
-  </section>
+      <div class="feature-card">
+        <img src="icons/chat.svg" alt="即時聊天" />
+        <h3>即時聊天</h3>
+        <p>一對一聊天，感受真實互動</p>
+      </div>
+      <div class="feature-card">
+        <img src="icons/profile.svg" alt="個人檔案" />
+        <h3>個人檔案</h3>
+        <p>展示最真實的自己</p>
+      </div>
+      <div class="feature-card">
+        <img src="icons/settings.svg" alt="喜好設定" />
+        <h3>喜好設定</h3>
+        <p>自訂篩選條件，優化配對結果</p>
+      </div>
+    </section>
+  </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="brand">IMeet4U</div>
-    <div class="brand">IMeet4U</div>
+  <footer style="text-align:center; padding:2rem 0; color:#999;">
+    &copy; 2025 IMEET4U. All Rights Reserved.
   </footer>
-
 </body>
 </html>
