@@ -2,16 +2,16 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IMEET4U - Discover Meaningful Connections</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMEET4U - 全站 SPA</title>
   <style>
-    /* Reset & base styles */
+    /* Reset & Base */
     * { margin:0; padding:0; box-sizing:border-box; }
     html { font-size:16px; }
     body { font-family:'PingFang TC','Noto Sans TC',sans-serif; color:#333; background:#f7f7f7; }
     a { text-decoration:none; color:inherit; }
     img { max-width:100%; height:auto; display:block; }
-    button { cursor:pointer; border:none; }
+    button, input, select, textarea { font-family:inherit; }
 
     /* Header */
     header {
@@ -20,29 +20,45 @@
       box-shadow:0 2px 4px rgba(0,0,0,0.1);
     }
     .logo { font-size:1.5rem; font-weight:bold; color:#FF6B6B; }
-    header nav { display:flex; }
-    header nav a {
+    nav { display:flex; align-items:center; }
+    nav a {
       margin-left:1rem; font-weight:500; color:#FF6B6B; cursor:pointer;
     }
-    .btn-primary {
-      background:#FF6B6B; color:#fff;
-      padding:0.75rem 1.5rem; border-radius:8px; font-size:1rem;
-    }
 
-    /* SPA pages */
+    /* SPA Pages */
     .page { display:none; padding:2rem; }
     .page.active { display:block; }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
       text-align:center; padding:4rem 2rem;
-      background:linear-gradient(135deg,#FF6B6B 0%,#4ECDC4 100%);
+      background:linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
       color:#fff;
     }
     .hero h1 { font-size:2.5rem; line-height:1.2; margin-bottom:1rem; }
     .hero p { margin-bottom:2rem; font-size:1.125rem; }
 
-    /* Match (card swipe) */
+    /* Features */
+    .features {
+      padding:3rem 2rem; background:#fff;
+      display:grid; gap:2rem;
+      grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    }
+    .feature-card {
+      background:#fff; padding:1.5rem;
+      border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.1);
+      text-align:center; transition:transform .2s; cursor:pointer;
+    }
+    .feature-card:hover { transform:translateY(-5px); }
+    .feature-card h3 { margin:1rem 0 .5rem; font-size:1.25rem; color:#FF6B6B; }
+    .feature-card p { font-size:1rem; color:#666; }
+
+    /* About */
+    #about p {
+      max-width:600px; margin:1rem auto; line-height:1.6; color:#444;
+    }
+
+    /* Match */
     #match .card {
       background:#fff; padding:2rem; margin-bottom:1rem; text-align:center;
       border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.1);
@@ -61,21 +77,39 @@
     }
     #chat button {
       padding:.5rem 1rem; border:1px solid #ccc; border-left:none;
-      border-radius:0 4px 4px 0; background:#fff;
+      border-radius:0 4px 4px 0; background:#fff; cursor:pointer;
     }
 
-    /* Forms */
-    form label { display:block; margin-bottom:1rem; }
-    form input, form select, form textarea {
+    /* Forms (Profile & Settings) */
+    form.form-container label { display:block; margin-bottom:1rem; }
+    form.form-container input,
+    form.form-container select,
+    form.form-container textarea {
       width:100%; padding:.5rem; border:1px solid #ccc; border-radius:4px;
     }
+    form.form-container button {
+      width:100%; padding:.75rem; background:#FF6B6B;
+      color:#fff; border-radius:8px; font-size:1rem; cursor:pointer;
+    }
+
+    /* Login & Register */
+    .form-container {
+      max-width:400px; margin:3rem auto;
+      background:#fff; padding:2rem; border-radius:8px;
+      box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    .form-container h2 { margin-bottom:1rem; }
+
+    /* Footer */
+    footer { text-align:center; padding:2rem 0; color:#999; }
 
     /* Responsive */
     @media (max-width:768px) {
       header { padding:1rem; }
-      header nav a { margin-left:.75rem; font-size:.9rem; }
+      nav a { margin-left:.75rem; font-size:.9rem; }
       .hero h1 { font-size:2rem; }
       .hero p { font-size:1rem; }
+      .features { padding:2rem 1rem; }
     }
   </style>
 </head>
@@ -85,29 +119,63 @@
     <div class="logo">IMEET4U</div>
     <nav>
       <a data-target="home">首頁</a>
+      <a data-target="about">關於我們</a>
       <a data-target="match">配對系統</a>
       <a data-target="chat">即時聊天</a>
       <a data-target="profile">個人檔案</a>
       <a data-target="settings">喜好設定</a>
-    </nav>
-    <nav>
-      <a href="login.html">登入</a>
-      <a href="register.html" class="btn-primary">註冊</a>
+      <a data-target="login">登入</a>
+      <a data-target="register">註冊</a>
     </nav>
   </header>
 
   <main>
-    <!-- Home / Hero -->
-    <section id="home" class="page active hero">
-      <h1>Discover<br>Meaningful<br>Connections</h1>
-      <p>加入 IMEET4U，開始你的浪漫旅程</p>
-      <a href="register.html" class="btn-primary">立即加入</a>
+    <!-- Home -->
+    <section id="home" class="page active">
+      <div class="hero">
+        <h1>Discover<br>Meaningful<br>Connections</h1>
+        <p>加入 IMEET4U，開始你的浪漫旅程</p>
+        <button class="btn-primary" onclick="document.querySelector('[data-target=register]').click()">立即加入</button>
+      </div>
+      <div class="features">
+        <div class="feature-card" data-target="match">
+          <img src="icons/match.svg" alt="配對系統">
+          <h3>配對系統</h3>
+          <p>滑動卡片，快速找到理想對象</p>
+        </div>
+        <div class="feature-card" data-target="chat">
+          <img src="icons/chat.svg" alt="即時聊天">
+          <h3>即時聊天</h3>
+          <p>一對一聊天，感受真實互動</p>
+        </div>
+        <div class="feature-card" data-target="profile">
+          <img src="icons/profile.svg" alt="個人檔案">
+          <h3>個人檔案</h3>
+          <p>展示最真實的自己</p>
+        </div>
+        <div class="feature-card" data-target="settings">
+          <img src="icons/settings.svg" alt="喜好設定">
+          <h3>喜好設定</h3>
+          <p>自訂篩選條件，優化配對結果</p>
+        </div>
+      </div>
     </section>
 
-    <!-- 配對系統 -->
+    <!-- About -->
+    <section id="about" class="page">
+      <h2>關於我們</h2>
+      <p>
+        IMEET4U 是專為現代單身族群設計的交友軟體，
+        結合地理定位、興趣標籤與智慧配對演算法，
+        幫助你在安全、直覺的環境中快速找到志趣相投的對象，
+        提升互動品質，建立有意義的連結。
+      </p>
+    </section>
+
+    <!-- Match -->
     <section id="match" class="page">
       <h2>配對系統</h2>
-      <div id="swipe-container" style="max-width:320px;margin:2rem auto;">
+      <div id="swipe-container">
         <div class="card">使用者 A</div>
         <div class="card">使用者 B</div>
         <div class="card">使用者 C</div>
@@ -118,34 +186,30 @@
       </div>
     </section>
 
-    <!-- 即時聊天 -->
+    <!-- Chat -->
     <section id="chat" class="page">
       <h2>即時聊天</h2>
       <div id="chat-window"></div>
       <div class="input-group">
-        <input id="msg" type="text" placeholder="輸入訊息…" />
+        <input id="msg" type="text" placeholder="輸入訊息…">
         <button id="send">傳送</button>
       </div>
     </section>
 
-    <!-- 個人檔案 -->
+    <!-- Profile -->
     <section id="profile" class="page">
       <h2>我的檔案</h2>
-      <form id="profile-form" style="max-width:400px;">
-        <label>名字：
-          <input type="text" name="name" value="忠叡 蔡" />
-        </label>
-        <label>自我介紹：
-          <textarea name="bio">這裡寫自我介紹…</textarea>
-        </label>
-        <button type="submit" class="btn-primary">儲存</button>
+      <form class="form-container" id="profile-form">
+        <label>名字：<input type="text" name="name" value="忠叡 蔡"></label>
+        <label>自我介紹：<textarea name="bio">這裡寫自我介紹…</textarea></label>
+        <button type="submit">儲存</button>
       </form>
     </section>
 
-    <!-- 喜好設定 -->
+    <!-- Settings -->
     <section id="settings" class="page">
       <h2>篩選喜好</h2>
-      <form id="settings-form" style="max-width:400px;">
+      <form class="form-container" id="settings-form">
         <label>性別偏好：
           <select name="gender">
             <option value="all">不限</option>
@@ -154,23 +218,50 @@
           </select>
         </label>
         <label>年齡範圍：
-          <input type="number" name="ageMin" placeholder="最小" style="width:45%;display:inline-block;" /> –
-          <input type="number" name="ageMax" placeholder="最大" style="width:45%;display:inline-block;" />
+          <input type="number" name="ageMin" placeholder="最小" style="width:45%;display:inline-block;"> –
+          <input type="number" name="ageMax" placeholder="最大" style="width:45%;display:inline-block;">
         </label>
-        <button type="submit" class="btn-primary">儲存設定</button>
+        <button type="submit">儲存設定</button>
       </form>
     </section>
+
+    <!-- Login -->
+    <section id="login" class="page">
+      <div class="form-container">
+        <h2>登入</h2>
+        <form>
+          <label>帳號或 Email：<input type="text" name="username"></label>
+          <label>密碼：<input type="password" name="password"></label>
+          <button type="submit">登入</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Register -->
+    <section id="register" class="page">
+      <div class="form-container">
+        <h2>註冊</h2>
+        <form>
+          <label>帳號：<input type="text" name="username"></label>
+          <label>Email：<input type="email" name="email"></label>
+          <label>密碼：<input type="password" name="password"></label>
+          <label>確認密碼：<input type="password" name="confirm_password"></label>
+          <button type="submit">註冊</button>
+        </form>
+      </div>
+    </section>
+
   </main>
 
-  <footer style="text-align:center;padding:2rem 0;color:#999;">
+  <footer>
     &copy; 2025 IMEET4U. All Rights Reserved.
   </footer>
 
   <script>
     // SPA 切換
-    document.querySelectorAll('header nav a[data-target]').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const tgt = tab.dataset.target;
+    document.querySelectorAll('[data-target]').forEach(el => {
+      el.addEventListener('click', () => {
+        const tgt = el.dataset.target;
         document.querySelectorAll('.page').forEach(p => {
           p.classList.toggle('active', p.id === tgt);
         });
@@ -198,11 +289,13 @@
     };
 
     // 表單示意
-    document.getElementById('profile-form')
-      .addEventListener('submit', e => { e.preventDefault(); alert('檔案已儲存'); });
-    document.getElementById('settings-form')
-      .addEventListener('submit', e => { e.preventDefault(); alert('喜好設定已更新'); });
+    document.getElementById('profile-form').addEventListener('submit', e => {
+      e.preventDefault(); alert('檔案已儲存');
+    });
+    document.getElementById('settings-form').addEventListener('submit', e => {
+      e.preventDefault(); alert('喜好設定已更新');
+    });
   </script>
+
 </body>
 </html>
-```
