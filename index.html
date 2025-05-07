@@ -102,7 +102,6 @@
       <a data-target="profile">Profile</a>
       <a data-target="settings">Preferences</a>
       <a data-target="calendar">Calendar</a>
-      <button id="q-btn">Survey</button>
       <button id="dark-toggle">🌙</button>
       <div id="auth-area">
         <a data-target="login">Log In</a>
@@ -141,8 +140,8 @@
     <section id="profile" class="page"><h2>My Profile</h2><form class="form-container" id="profile-form"><label>Name:<input name="name" required></label><label>Bio:<textarea name="bio" required></textarea></label><button type="submit">Save</button></form></section>
 
     <!-- Settings -->
-    <section id="settings" class="page"><h2>Preferences</h2><form class="form-container" id="settings-form"><label>Gender Preference:<select name="gender"><option>No Preference</option><option>Female</option><option>Male</option></select></label><label>Age Range:<input type="number" name="ageMin" placeholder="Min"> – <input type="number" name="ageMax" placeholder="Max"></label><button type="submit">Save Settings</button></form></section>
-
+    <section id="settings" class="page"><h2>Preferences</h2><form class="form-container" id="settings-form"><label>Gender Preference:<select name="gender"><option>No Preference</option><option>Female</option><option>Male</option></select></label><label>Age Range:<input type="number" name="ageMin" placeholder="Min"> – <input type="number" name="ageMax" placeholder="Max"></label><button type="submit">Save Settings</button></form></section><div class="form-container"><button id="open-survey" class="btn-primary">Take Personality Survey</button></div>
+  
     <!-- Calendar -->
     <section id="calendar" class="page"><h2>Calendar</h2><div class="calendar" id="calendar-grid"></div></section>
 
@@ -194,7 +193,7 @@
 
     // Survey Modal
     const qModal = document.getElementById('q-modal');
-    document.getElementById('q-btn').onclick = ()=> qModal.classList.add('active');
+    document.getElementById('open-survey').onclick = ()=> qModal.classList.add('active');
     document.getElementById('q-close').onclick = ()=> qModal.classList.remove('active');
     document.getElementById('q-form').onsubmit = e=>{
       e.preventDefault();
