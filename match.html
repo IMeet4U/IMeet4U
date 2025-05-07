@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>配對系統 – IMEET4U</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">IMEET4U</div>
+    <nav>
+      <a href="match.html" class="active">配對系統</a>
+      <a href="chat.html">即時聊天</a>
+      <a href="profile.html">個人檔案</a>
+      <a href="settings.html">喜好設定</a>
+      <a href="calendar.html">活動日曆</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="match">
+      <h2>配對系統</h2>
+      <div id="swipe-container">
+        <div class="card">使用者 A</div>
+        <div class="card">使用者 B</div>
+        <div class="card">使用者 C</div>
+      </div>
+      <div class="controls">
+        <button id="dislike">👎</button>
+        <button id="like">👍</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>&copy; 2025 IMEET4U</footer>
+
+  <script>
+    const container = document.getElementById('swipe-container');
+    document.getElementById('like').onclick =
+    document.getElementById('dislike').onclick = () => {
+      const card = container.querySelector('.card');
+      if (card) card.remove();
+    };
+    // 簡易拖曳滑動可再自行加上
+  </script>
+</body>
+</html>
