@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>IMEET4U - Single-Page Application</title>
   <style>
+    /* CSS Variables & Reset */
     :root {
       --color-primary: #FF6B6B;
       --color-secondary: #4ECDC4;
@@ -25,6 +26,8 @@
     body{font-family:'PingFang TC','Noto Sans TC',sans-serif;color:var(--color-text);background:var(--color-bg);}
     a, button{font-family:'PingFang TC','Noto Sans TC',sans-serif;text-decoration:none;color:inherit;background:none;border:none;cursor:pointer;}
     img{max-width:100%;height:auto;display:block;}
+
+    /* Header */
     header{background:var(--color-light);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
     .logo{font-size:1.5rem;font-weight:bold;color:var(--color-primary);}
     nav{display:flex;align-items:center;}
@@ -33,37 +36,57 @@
     #auth-area{display:flex;align-items:center;position:relative;}
     #user-menu{position:absolute;top:2.5rem;right:0;background:var(--color-light);border:1px solid #ccc;border-radius:4px;display:none;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
     #user-menu button{width:100%;padding:.5rem 1rem;text-align:left;}
+
+    /* SPA Pages + Transitions */
     .page{display:none;padding:2rem;opacity:0;transition:opacity .3s;}
     .page.active{display:block;opacity:1;}
+
+    /* Hero */
     .hero{text-align:center;padding:4rem 2rem;background:linear-gradient(135deg,var(--color-primary) 0%,var(--color-secondary) 100%);color:var(--color-light);}
     .hero h1{font-size:2.5rem;line-height:1.2;margin-bottom:1rem;}
     .hero p{margin-bottom:2rem;font-size:1.125rem;}
+
+    /* Features */
     .features{padding:3rem 2rem;background:var(--color-light);display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
     .feature-card{background:var(--color-light);padding:1.5rem;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);text-align:center;transition:transform .2s;}
     .feature-card:hover{transform:translateY(-5px);}
     .feature-card h3{margin:1rem 0 .5rem;font-size:1.25rem;color:var(--color-primary);}
-    .feature-card p{font-size:1rem;color:var(--color-muted);}
+    .feature-card p{font-size:1rem;color:var(--color-muted);}    
+
+    /* About */
     #about p{max-width:600px;margin:1rem auto;line-height:1.6;}
+
+    /* Match */
     #match .card{background:var(--color-light);padding:2rem;margin-bottom:1rem;text-align:center;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);touch-action:pan-y;user-select:none;}
     #match .controls{text-align:center;margin-top:1rem;}
     #match .controls button{font-size:1.5rem;margin:0 .5rem;}
+
+    /* Chat */
     #chat #chat-window{background:var(--color-light);border:1px solid #ccc;border-radius:4px;height:300px;overflow-y:auto;padding:1rem;}
     #chat .input-group{display:flex;margin-top:1rem;max-width:400px;}
     #chat input{flex:1;padding:.5rem;border:1px solid #ccc;border-radius:4px 0 0 4px;}
     #chat button{padding:.5rem 1rem;border:1px solid #ccc;border-left:none;border-radius:0 4px 4px 0;}
-    .form-container{max-width:400px;margin:3rem auto;background:var(--color-light);padding:2rem;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);}
+
+    /* Forms */
+    .form-container{max-width:400px;margin:3rem auto;background:var(--color-light);padding:2rem;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);}    
     .form-container h2{margin-bottom:1rem;}
     .form-container label{display:block;margin-bottom:1rem;}
     .form-container input,.form-container select,.form-container textarea{width:100%;padding:.5rem;border:1px solid #ccc;border-radius:4px;}
     .form-container button{width:100%;padding:.75rem;background:var(--color-primary);color:var(--color-light);border-radius:var(--radius);}
+
+    /* Calendar */
     .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
     .calendar .header{font-weight:bold;color:var(--color-primary);}
     .calendar div{padding:.5rem;text-align:center;border-radius:4px;background:var(--color-light);}
+
+    /* Footer */
     footer{text-align:center;padding:2rem 0;}
+
     @media(max-width:768px){header{padding:1rem;}nav a,nav button{margin-left:.75rem;font-size:.9rem;} .hero h1{font-size:2rem;} .hero p{font-size:1rem;} .features{padding:2rem 1rem;}}
   </style>
 </head>
 <body data-theme="light">
+
   <header>
     <div class="logo">IMEET4U</div>
     <nav>
@@ -75,54 +98,79 @@
       <a data-target="settings">Preferences</a>
       <a data-target="calendar">Calendar</a>
       <button id="dark-toggle">🌙</button>
-      <div id="auth-area">
-        <a data-target="login">Log In</a>
-        <a data-target="register" class="btn-primary">Sign Up</a>
-      </div>
+      <div id="auth-area"></div>
       <div id="user-menu"></div>
     </nav>
   </header>
+
   <main>
-    <section id="home" class="page active">...</section>
-    <section id="about" class="page">...</section>
-    <section id="match" class="page">...</section>
-    <section id="chat" class="page">...</section>
-    <section id="profile" class="page">...</section>
+    <!-- Home -->
+    <section id="home" class="page active">
+      <!-- ... unchanged ... -->
+    </section>
+
+    <!-- About -->
+    <section id="about" class="page">
+      <!-- ... unchanged ... -->
+    </section>
+
+    <!-- Match -->
+    <section id="match" class="page">
+      <!-- ... unchanged ... -->
+    </section>
+
+    <!-- Chat -->
+    <section id="chat" class="page">
+      <!-- ... unchanged ... -->
+    </section>
+
+    <!-- Profile -->
+    <section id="profile" class="page">
+      <!-- ... unchanged ... -->
+    </section>
+
+    <!-- Settings with embedded survey -->
     <section id="settings" class="page">
       <h2>Preferences</h2>
       <form class="form-container" id="settings-form">
-        <label>Gender Preference:
-          <select name="gender">
-            <option>No Preference</option>
-            <option>Female</option>
-            <option>Male</option>
-          </select>
-        </label>
-        <label>Age Range:
-          <input type="number" name="ageMin" placeholder="Min"> –
-          <input type="number" name="ageMax" placeholder="Max">
-        </label>
-        <label>Do you like outdoor activities?
-          <select name="outdoor">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </label>
-        <label>Which type of events do you prefer?
-          <select name="theme">
-            <option value="sports">Sports</option>
-            <option value="entertainment">Entertainment</option>
-          </select>
-        </label>
+        <label>Gender Preference:<select name="gender"><option>No Preference</option><option>Female</option><option>Male</option></select></label>
+        <label>Age Range:<input type="number" name="ageMin" placeholder="Min"> – <input type="number" name="ageMax" placeholder="Max"></label>
         <button type="submit">Save Settings</button>
       </form>
+      <div class="form-container">
+        <h3>Personality Survey</h3>
+        <form id="survey-form">
+          <label>Do you like outdoor activities?
+            <select name="outdoor"><option value="yes">Yes</option><option value="no">No</option></select>
+          </label>
+          <label>Which type of events do you prefer?
+            <select name="theme"><option value="sports">Sports</option><option value="entertainment">Entertainment</option></select>
+          </label>
+          <button type="submit">Save Survey</button>
+        </form>
+      </div>
     </section>
-    <section id="calendar" class="page">...</section>
-    <section id="login" class="page">...</section>
-    <section id="register" class="page">...</section>
+
+    <!-- Calendar -->
+    <section id="calendar" class="page">
+      <!-- ... unchanged ... -->
+    </section>
+
+    <!-- Login -->
+    <section id="login" class="page">
+      <!-- ... unchanged ... -->
+    </section>
+
+    <!-- Register -->
+    <section id="register" class="page">
+      <!-- ... unchanged ... -->
+    </section>
   </main>
+
   <footer>&copy; 2025 IMEET4U. All Rights Reserved.</footer>
+
   <script>
+    // Dark Mode Toggle
     const saved = localStorage.getItem('theme')||'light';
     document.body.setAttribute('data-theme', saved);
     document.getElementById('dark-toggle').onclick = () => {
@@ -131,20 +179,26 @@
       document.body.setAttribute('data-theme', nxt);
       localStorage.setItem('theme', nxt);
     };
+
+    // SPA Routing
     function showPage(id){
       document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active', p.id===id));
     }
     document.body.addEventListener('click', e=>{
       const tgt = e.target.closest('[data-target]');
-      if(tgt){location.hash = tgt.dataset.target;}
+      if(tgt){ location.hash = tgt.dataset.target; }
     });
     window.addEventListener('hashchange', ()=>showPage(location.hash.slice(1)));
     if(location.hash) showPage(location.hash.slice(1)); else location.hash='home';
+
+    // Auth Area
     const authArea = document.getElementById('auth-area'), userMenu = document.getElementById('user-menu');
     function renderAuth(){
       const user = localStorage.getItem('username');
       if(user){
-        authArea.innerHTML = `<button id="user-btn">${user}</button>`;
+        authArea.innerHTML = `
+          <button id="user-btn">${user}</button>
+        `;
         userMenu.innerHTML = `<button id="logout-btn">Log Out</button>`;
         document.getElementById('user-btn').onclick = ()=>{
           userMenu.style.display = userMenu.style.display==='block'?'none':'block';
@@ -157,24 +211,38 @@
       }
     }
     renderAuth();
+
+    // Login/Register Simulation
     document.getElementById('login-form').onsubmit = e=>{
-      e.preventDefault(); const u=e.target.username.value.trim(); if(u){localStorage.setItem('username',u);renderAuth();location.hash='home';}
+      e.preventDefault(); const u=e.target.username.value.trim(); if(u){
+        localStorage.setItem('username',u);renderAuth();location.hash='home';
+      }
     };
     document.getElementById('register-form').onsubmit = e=>{
-      e.preventDefault(); const fm=e.target; if(fm.password.value===fm.confirm_password.value){localStorage.setItem('username',fm.username.value.trim());renderAuth();location.hash='home';} else alert('Passwords do not match');
+      e.preventDefault(); const fm=e.target; if(fm.password.value===fm.confirm_password.value){
+        localStorage.setItem('username',fm.username.value.trim());renderAuth();location.hash='home';
+      } else alert('Passwords do not match');
     };
-    document.getElementById('settings-form').onsubmit = e=>{
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      localStorage.setItem('preferences', JSON.stringify(Object.fromEntries(formData)));
-      alert('Preferences & Survey saved');
-    };
+
+    // Calendar
     const cal = document.getElementById('calendar-grid');
     const today = new Date(), Y=today.getFullYear(), M=today.getMonth();
     const first= new Date(Y,M,1).getDay(), days=new Date(Y,M+1,0).getDate();
-    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(w=>{const d=document.createElement('div');d.textContent=w;d.className='header';cal.append(d);});
+    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(w=>{
+      const d=document.createElement('div'); d.textContent=w; d.className='header'; cal.append(d);
+    });
     for(let i=0;i<first;i++) cal.append(document.createElement('div'));
-    for(let d=1;d<=days;d++){const c=document.createElement('div');c.textContent=d;cal.append(c);}
+    for(let d=1;d<=days;d++){ const c=document.createElement('div'); c.textContent=d; cal.append(c);}    
+
+    // Survey Form Submission
+    document.getElementById('survey-form').onsubmit = e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+      localStorage.setItem('survey', JSON.stringify(data));
+      alert('Survey saved');
+    };
+
+    // Other scripts omitted for brevity
   </script>
 </body>
 </html>
