@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMEET4U - 全站 SPA</title>
+  <title>IMEET4U - Single-Page Application</title>
   <style>
-    /* CSS 變數 & Reset */
+    /* CSS Variables & Reset */
     :root {
       --color-primary: #FF6B6B;
       --color-secondary: #4ECDC4;
@@ -95,18 +95,18 @@
   <header>
     <div class="logo">IMEET4U</div>
     <nav>
-      <a data-target="home">首頁</a>
-      <a data-target="about">關於我們</a>
-      <a data-target="match">配對系統</a>
-      <a data-target="chat">即時聊天</a>
-      <a data-target="profile">個人檔案</a>
-      <a data-target="settings">喜好設定</a>
-      <a data-target="calendar">活動日曆</a>
-      <button id="q-btn">問卷</button>
+      <a data-target="home">Home</a>
+      <a data-target="about">About Us</a>
+      <a data-target="match">Matching</a>
+      <a data-target="chat">Chat</a>
+      <a data-target="profile">Profile</a>
+      <a data-target="settings">Preferences</a>
+      <a data-target="calendar">Calendar</a>
+      <button id="q-btn">Survey</button>
       <button id="dark-toggle">🌙</button>
       <div id="auth-area">
-        <a data-target="login">登入</a>
-        <a data-target="register" class="btn-primary">註冊</a>
+        <a data-target="login">Log In</a>
+        <a data-target="register" class="btn-primary">Sign Up</a>
       </div>
       <div id="user-menu"></div>
     </nav>
@@ -117,59 +117,59 @@
     <section id="home" class="page active">
       <div class="hero">
         <h1>Discover<br>Meaningful<br>Connections</h1>
-        <p>加入 IMEET4U，開始你的浪漫旅程</p>
-        <a class="btn-primary" data-target="register">立即加入</a>
+        <p>Join IMEET4U and start your romantic journey</p>
+        <a class="btn-primary" data-target="register">Join Now</a>
       </div>
       <div class="features">
-        <div class="feature-card" data-target="match"><img src="icons/match.svg" alt=""><h3>配對系統</h3><p>滑動卡片，快速找到理想對象</p></div>
-        <div class="feature-card" data-target="chat"><img src="icons/chat.svg" alt=""><h3>即時聊天</h3><p>一對一聊天，感受真實互動</p></div>
-        <div class="feature-card" data-target="profile"><img src="icons/profile.svg" alt=""><h3>個人檔案</h3><p>展示最真實的自己</p></div>
-        <div class="feature-card" data-target="settings"><img src="icons/settings.svg" alt=""><h3>喜好設定</h3><p>自訂篩選條件，優化配對結果</p></div>
+        <div class="feature-card" data-target="match"><img src="icons/match.svg" alt="Match Icon"><h3>Matching System</h3><p>Swipe cards to quickly find ideal matches</p></div>
+        <div class="feature-card" data-target="chat"><img src="icons/chat.svg" alt="Chat Icon"><h3>Instant Chat</h3><p>One-on-one chat for real interaction</p></div>
+        <div class="feature-card" data-target="profile"><img src="icons/profile.svg" alt="Profile Icon"><h3>Profile</h3><p>Show your true self</p></div>
+        <div class="feature-card" data-target="settings"><img src="icons/settings.svg" alt="Preferences Icon"><h3>Preferences</h3><p>Customize filters to optimize matching</p></div>
       </div>
     </section>
 
     <!-- About -->
-    <section id="about" class="page"><h2>關於我們</h2><p>IMEET4U 是專為現代單身族群設計的交友軟體…</p></section>
+    <section id="about" class="page"><h2>About Us</h2><p>IMEET4U is a dating app designed for modern singles, providing powerful matching, chat, and customization features to help you connect with like-minded people.</p></section>
 
     <!-- Match -->
-    <section id="match" class="page"><h2>配對系統</h2><div id="swipe-container"><div class="card">使用者 A</div><div class="card">使用者 B</div><div class="card">使用者 C</div></div><div class="controls"><button id="dislike">👎</button><button id="like">👍</button></div></section>
+    <section id="match" class="page"><h2>Matching</h2><div id="swipe-container"><div class="card">User A</div><div class="card">User B</div><div class="card">User C</div></div><div class="controls"><button id="dislike">👎</button><button id="like">👍</button></div></section>
 
     <!-- Chat -->
-    <section id="chat" class="page"><h2>即時聊天</h2><div id="chat-window"></div><div class="input-group"><input id="msg" placeholder="輸入訊息…"><button id="send">傳送</button></div></section>
+    <section id="chat" class="page"><h2>Chat</h2><div id="chat-window"></div><div class="input-group"><input id="msg" placeholder="Type a message..."><button id="send">Send</button></div></section>
 
     <!-- Profile -->
-    <section id="profile" class="page"><h2>我的檔案</h2><form class="form-container" id="profile-form"><label>名字：<input name="name" required></label><label>自我介紹：<textarea name="bio" required></textarea></label><button type="submit">儲存</button></form></section>
+    <section id="profile" class="page"><h2>My Profile</h2><form class="form-container" id="profile-form"><label>Name:<input name="name" required></label><label>Bio:<textarea name="bio" required></textarea></label><button type="submit">Save</button></form></section>
 
     <!-- Settings -->
-    <section id="settings" class="page"><h2>篩選喜好</h2><form class="form-container" id="settings-form"><label>性別偏好：<select name="gender"><option>不限</option><option>女性</option><option>男性</option></select></label><label>年齡範圍：<input type="number" name="ageMin" placeholder="最小"> – <input type="number" name="ageMax" placeholder="最大"></label><button type="submit">儲存設定</button></form></section>
+    <section id="settings" class="page"><h2>Preferences</h2><form class="form-container" id="settings-form"><label>Gender Preference:<select name="gender"><option>No Preference</option><option>Female</option><option>Male</option></select></label><label>Age Range:<input type="number" name="ageMin" placeholder="Min"> – <input type="number" name="ageMax" placeholder="Max"></label><button type="submit">Save Settings</button></form></section>
 
     <!-- Calendar -->
-    <section id="calendar" class="page"><h2>活動日曆</h2><div class="calendar" id="calendar-grid"></div></section>
+    <section id="calendar" class="page"><h2>Calendar</h2><div class="calendar" id="calendar-grid"></div></section>
 
     <!-- Login -->
-    <section id="login" class="page"><div class="form-container"><h2>登入</h2><form id="login-form"><label>帳號或 Email：<input name="username" required></label><label>密碼：<input type="password" name="password" required></label><button type="submit">登入</button></form></div></section>
+    <section id="login" class="page"><div class="form-container"><h2>Log In</h2><form id="login-form"><label>Username or Email:<input name="username" required></label><label>Password:<input type="password" name="password" required></label><button type="submit">Log In</button></form></div></section>
 
     <!-- Register -->
-    <section id="register" class="page"><div class="form-container"><h2>註冊</h2><form id="register-form"><label>帳號：<input name="username" required></label><label>Email：<input type="email" name="email" required></label><label>密碼：<input type="password" name="password" required minlength="6"></label><label>確認密碼：<input type="password" name="confirm_password" required></label><button type="submit">註冊</button></form></div></section>
+    <section id="register" class="page"><div class="form-container"><h2>Sign Up</h2><form id="register-form"><label>Username:<input name="username" required></label><label>Email:<input type="email" name="email" required></label><label>Password:<input type="password" name="password" required minlength="6"></label><label>Confirm Password:<input type="password" name="confirm_password" required></label><button type="submit">Sign Up</button></form></div></section>
   </main>
 
   <footer>&copy; 2025 IMEET4U. All Rights Reserved.</footer>
 
-  <!-- Questionnaire Modal -->
+  <!-- Survey Modal -->
   <div class="modal-backdrop" id="q-modal">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="q-title">
-      <h3 id="q-title">性格問卷</h3>
+      <h3 id="q-title">Personality Survey</h3>
       <form id="q-form">
-        <label>你喜歡戶外活動嗎？<select name="outdoor"><option value="yes">是</option><option value="no">否</option></select></label>
-        <label>你偏好哪種類型聚會？<select name="theme"><option value="sports">運動</option><option value="entertainment">娛樂</option></select></label>
-        <button type="submit">儲存問卷</button>
-        <button type="button" id="q-close">關閉</button>
+        <label>Do you like outdoor activities?<select name="outdoor"><option value="yes">Yes</option><option value="no">No</option></select></label>
+        <label>Which type of events do you prefer?<select name="theme"><option value="sports">Sports</option><option value="entertainment">Entertainment</option></select></label>
+        <button type="submit">Save</button>
+        <button type="button" id="q-close">Close</button>
       </form>
     </div>
   </div>
 
   <script>
-    // 深色模式切換
+    // Dark Mode Toggle
     const saved = localStorage.getItem('theme')||'light';
     document.body.setAttribute('data-theme', saved);
     document.getElementById('dark-toggle').onclick = () => {
@@ -179,7 +179,7 @@
       localStorage.setItem('theme', nxt);
     };
 
-    // SPA 路由 (使用事件委派支援動態 auth links)
+    // SPA Routing (uses event delegation to support dynamic auth links)
     function showPage(id){
       document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active', p.id===id));
     }
@@ -192,14 +192,14 @@
     window.addEventListener('hashchange', ()=>showPage(location.hash.slice(1)));
     if(location.hash) showPage(location.hash.slice(1)); else location.hash='home';
 
-    // 問卷 Modal
+    // Survey Modal
     const qModal = document.getElementById('q-modal');
     document.getElementById('q-btn').onclick = ()=> qModal.classList.add('active');
     document.getElementById('q-close').onclick = ()=> qModal.classList.remove('active');
     document.getElementById('q-form').onsubmit = e=>{
       e.preventDefault();
-      localStorage.setItem('questionnaire', JSON.stringify(Object.fromEntries(new FormData(e.target))));
-      alert('問卷已儲存'); qModal.classList.remove('active');
+      localStorage.setItem('survey', JSON.stringify(Object.fromEntries(new FormData(e.target))));
+      alert('Survey saved'); qModal.classList.remove('active');
     };
 
     // Auth Area
@@ -208,7 +208,7 @@
       const user = localStorage.getItem('username');
       if(user){
         authArea.innerHTML = `<button id="user-btn">${user}</button>`;
-        userMenu.innerHTML = `<button id="logout-btn">登出</button>`;
+        userMenu.innerHTML = `<button id="logout-btn">Log Out</button>`;
         document.getElementById('user-btn').onclick = ()=>{
           userMenu.style.display = userMenu.style.display==='block'?'none':'block';
         };
@@ -216,7 +216,7 @@
           localStorage.removeItem('username'); userMenu.style.display='none'; renderAuth(); location.hash='home';
         };
       } else {
-        authArea.innerHTML = `<a data-target="login">登入</a><a data-target="register" class="btn-primary">註冊</a>`;
+        authArea.innerHTML = `<a data-target="login">Log In</a><a data-target="register" class="btn-primary">Sign Up</a>`;
       }
     }
     renderAuth();
@@ -226,16 +226,16 @@
       e.preventDefault(); const u=e.target.username.value.trim(); if(u){localStorage.setItem('username',u);renderAuth();location.hash='home';}
     };
     document.getElementById('register-form').onsubmit = e=>{
-      e.preventDefault(); const fm=e.target; if(fm.password.value===fm.confirm_password.value){localStorage.setItem('username',fm.username.value.trim());renderAuth();location.hash='home';} else alert('密碼不一致');
+      e.preventDefault(); const fm=e.target; if(fm.password.value===fm.confirm_password.value){localStorage.setItem('username',fm.username.value.trim());renderAuth();location.hash='home';} else alert('Passwords do not match');
     };
 
     // Calendar
     const cal = document.getElementById('calendar-grid');
     const today = new Date(), Y=today.getFullYear(), M=today.getMonth();
     const first= new Date(Y,M,1).getDay(), days=new Date(Y,M+1,0).getDate();
-    ['日','一','二','三','四','五','六'].forEach(w=>{const d=document.createElement('div');d.textContent=w;d.className='header';cal.append(d);});
+    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(w=>{const d=document.createElement('div');d.textContent=w;d.className='header';cal.append(d);});
     for(let i=0;i<first;i++) cal.append(document.createElement('div'));
-    for(let d=1;d<=days;d++){const c=document.createElement('div');c.textContent=d;cal.append(c);}
+    for(let d=1;d<=days;d++){const c=document.createElement('div');c.textContent=d;cal.append(c);}    
 
     // Match drag/swipe & chat & forms omitted (same as before)
   </script>
