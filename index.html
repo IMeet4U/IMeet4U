@@ -23,32 +23,39 @@
     }
     *{margin:0;padding:0;box-sizing:border-box;}
     html{font-size:16px;}
-    body{font-family:'PingFang TC','Noto Sans TC',sans-serif;color:var(--color-text);background:var(--color-bg);}
-    a, button{font-family:'PingFang TC','Noto Sans TC',sans-serif;text-decoration:none;color:inherit;}
+    body{font-family:'PingFang TC','Noto Sans TC',sans-serif;
+         color:var(--color-text);background:var(--color-bg);}
+    a, button {font-family:inherit;text-decoration:none;color:inherit;}
     img{max-width:100%;height:auto;display:block;}
 
     /* Header */
-    header{background:var(--color-light);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 4px rgba(0,0,0,0.1);position:relative;}
+    header{background:var(--color-light);padding:1rem 2rem;
+      display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);}
     .logo{font-size:1.5rem;font-weight:bold;color:var(--color-primary);}
     nav{display:flex;align-items:center;}
-    nav a, nav button{margin-left:1rem;font-weight:500;color:var(--color-primary);cursor:pointer;background:none;border:none;}
-    .btn-primary{padding:.75rem 1.5rem;background:var(--color-primary);color:var(--color-light);border-radius:var(--radius);}
-    #auth-area{position:relative;display:flex;align-items:center;}
-    #user-menu{position:absolute;top:2.5rem;right:0;background:var(--color-light);border:1px solid #ccc;border-radius:4px;display:none;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
-    #user-menu button{display:block;padding:.5rem 1rem;width:100%;text-align:left;border:none;background:none;cursor:pointer;}
+    nav a, nav button{margin-left:1rem;font-weight:500;
+      color:var(--color-primary);cursor:pointer;background:none;border:none;}
+    .btn-primary{padding:.75rem 1.5rem;background:var(--color-primary);
+      color:var(--color-light);border-radius:var(--radius);}
 
     /* SPA Pages + Transitions */
     .page{display:none;padding:2rem;opacity:0;transition:opacity .3s;}
     .page.active{display:block;opacity:1;}
 
     /* Hero */
-    .hero{text-align:center;padding:4rem 2rem;background:linear-gradient(135deg,var(--color-primary) 0%,var(--color-secondary) 100%);color:var(--color-light);}
+    .hero{text-align:center;padding:4rem 2rem;
+      background:linear-gradient(135deg,var(--color-primary) 0%,var(--color-secondary) 100%);
+      color:var(--color-light);}
     .hero h1{font-size:2.5rem;line-height:1.2;margin-bottom:1rem;}
     .hero p{margin-bottom:2rem;font-size:1.125rem;}
 
     /* Features */
-    .features{padding:3rem 2rem;background:var(--color-light);display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
-    .feature-card{background:var(--color-light);padding:1.5rem;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);text-align:center;transition:transform .2s;cursor:pointer;}
+    .features{padding:3rem 2rem;background:var(--color-light);
+      display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+    .feature-card{background:var(--color-light);padding:1.5rem;
+      border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);
+      text-align:center;transition:transform .2s;cursor:pointer;}
     .feature-card:hover{transform:translateY(-5px);}
     .feature-card h3{margin:1rem 0 .5rem;font-size:1.25rem;color:var(--color-primary);}
     .feature-card p{font-size:1rem;color:var(--color-muted);}
@@ -57,37 +64,51 @@
     #about p{max-width:600px;margin:1rem auto;line-height:1.6;color:var(--color-text);}
 
     /* Match */
-    #match .card{background:var(--color-light);padding:2rem;margin-bottom:1rem;text-align:center;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);touch-action:pan-y;user-select:none;}
+    #match .card{background:var(--color-light);padding:2rem;margin-bottom:1rem;
+      text-align:center;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);
+      touch-action: pan-y; user-select: none; }
     #match .controls{text-align:center;margin-top:1rem;}
     #match .controls button{font-size:1.5rem;margin:0 .5rem;}
 
     /* Chat */
-    #chat #chat-window{background:var(--color-light);border:1px solid #ccc;border-radius:4px;height:300px;overflow-y:auto;padding:1rem;}
+    #chat #chat-window{background:var(--color-light);border:1px solid #ccc;
+      border-radius:4px;height:300px;overflow-y:auto;padding:1rem;}
     #chat .input-group{display:flex;margin-top:1rem;max-width:400px;}
     #chat input{flex:1;padding:.5rem;border:1px solid #ccc;border-radius:4px 0 0 4px;}
-    #chat button{padding:.5rem 1rem;border:1px solid #ccc;border-left:none;border-radius:0 4px 4px 0;background:var(--color-light);cursor:pointer;}
+    #chat button{padding:.5rem 1rem;border:1px solid #ccc;border-left:none;
+      border-radius:0 4px 4px 0;background:var(--color-light);cursor:pointer;}
 
     /* Forms */
-    .form-container{max-width:400px;margin:3rem auto;background:var(--color-light);padding:2rem;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);}
-    .form-container h2{margin-bottom:1rem;}
+    .form-container{max-width:400px;margin:3rem auto;background:var(--color-light);
+      padding:2rem;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);}
     .form-container label{display:block;margin-bottom:1rem;}
-    .form-container input, .form-container select, .form-container textarea{width:100%;padding:.5rem;border:1px solid #ccc;border-radius:4px;}
-    .form-container button{width:100%;padding:.75rem;background:var(--color-primary);color:var(--color-light);border-radius:var(--radius);font-size:1rem;cursor:pointer;}
+    .form-container input,.form-container select,.form-container textarea{
+      width:100%;padding:.5rem;border:1px solid #ccc;border-radius:4px;}
+    .form-container button{width:100%;padding:.75rem;
+      background:var(--color-primary);color:var(--color-light);
+      border-radius:var(--radius);font-size:1rem;cursor:pointer;}
 
-    /* Modal */
-    .modal-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;}
-    .modal-backdrop.active{display:flex;}
-    .modal{font-family:'PingFang TC','Noto Sans TC',sans-serif;background:var(--color-light);padding:2rem;border-radius:var(--radius);max-width:500px;width:90%;max-height:90%;overflow:auto;}
-
-    /* Calendar */
+    /* Modal & Calendar */
+    .modal-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;}
+    .modal{background:var(--color-light);padding:2rem;border-radius:var(--radius);
+      max-width:500px;width:90%;max-height:90%;overflow:auto;}
+    .modal.active .modal-backdrop{display:flex;}
     .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+    .calendar div{padding:.5rem;text-align:center;border-radius:4px;}
     .calendar .header{font-weight:bold;color:var(--color-primary);}
-    .calendar div{padding:.5rem;text-align:center;border-radius:4px;background:var(--color-light);}
 
-    /* Footer */
-    footer{text-align:center;padding:2rem 0;color:var(--color-muted);}
+    /* Dark Toggle */
+    #dark-toggle{font-size:1.2rem;}
 
-    @media(max-width:768px){header{padding:1rem;}nav a,nav button{margin-left:.75rem;font-size:.9rem;} .hero h1{font-size:2rem;} .hero p{font-size:1rem;} .features{padding:2rem 1rem;}}
+    /* Responsive */
+    @media (max-width:768px){
+      header{padding:1rem;}
+      nav a,nav button{margin-left:.75rem;font-size:.9rem;}
+      .hero h1{font-size:2rem;}
+      .hero p{font-size:1rem;}
+      .features{padding:2rem 1rem;}
+    }
   </style>
 </head>
 <body>
@@ -102,18 +123,15 @@
       <a data-target="profile">個人檔案</a>
       <a data-target="settings">喜好設定</a>
       <a data-target="calendar">活動日曆</a>
-      <button id="q-btn">問卷</button>
-      <button id="dark-toggle">🌙</button>
-      <div id="auth-area">
-        <a data-target="login">登入</a>
-        <a data-target="register" class="btn-primary">註冊</a>
-      </div>
-      <div id="user-menu"></div>
+      <button id="q-btn" aria-label="性格問卷">問卷</button>
+      <button id="dark-toggle" aria-label="切換深色模式">🌙</button>
+      <a data-target="login">登入</a>
+      <a data-target="register" class="btn-primary">註冊</a>
     </nav>
   </header>
 
   <main>
-     <!-- Home -->
+    <!-- Home -->
     <section id="home" class="page active">
       <div class="hero">
         <h1>Discover<br>Meaningful<br>Connections</h1>
@@ -121,70 +139,49 @@
         <a class="btn-primary" data-target="register">立即加入</a>
       </div>
       <div class="features">
-        <div class="feature-card" data-target="match">
-          <img src="icons/match.svg" alt="配對系統">
-          <h3>配對系統</h3>
-          <p>滑動卡片，快速找到理想對象</p>
-        </div>
-        <div class="feature-card" data-target="chat">
-          <img src="icons/chat.svg" alt="即時聊天">
-          <h3>即時聊天</h3>
-          <p>一對一聊天，感受真實互動</p>
-        </div>
-        <div class="feature-card" data-target="profile">
-          <img src="icons/profile.svg" alt="個人檔案">
-          <h3>個人檔案</h3>
-          <p>展示最真實的自己</p>
-        </div>
-        <div class="feature-card" data-target="settings">
-          <img src="icons/settings.svg" alt="喜好設定">
-          <h3>喜好設定</h3>
-          <p>自訂篩選條件，優化配對結果</p>
-        </div>
+        <div class="feature-card" data-target="match"><img src="icons/match.svg"><h3>配對系統</h3><p>滑動卡片，快速找到理想對象</p></div>
+        <div class="feature-card" data-target="chat"><img src="icons/chat.svg"><h3>即時聊天</h3><p>一對一聊天，感受真實互動</p></div>
+        <div class="feature-card" data-target="profile"><img src="icons/profile.svg"><h3>個人檔案</h3><p>展示最真實的自己</p></div>
+        <div class="feature-card" data-target="settings"><img src="icons/settings.svg"><h3>喜好設定</h3><p>自訂篩選條件，優化配對結果</p></div>
       </div>
     </section>
 
     <!-- About -->
     <section id="about" class="page">
       <h2>關於我們</h2>
-      <p>
-        IMEET4U 是專為現代單身族群設計的交友軟體，
-        結合地理定位、興趣標籤與智慧配對演算法，
-        幫助你在安全、直覺的環境中快速找到志趣相投的對象，
-        提升互動品質，建立有意義的連結。
-      </p>
+      <p>IMEET4U 是專為現代單身族群設計的交友軟體，結合地理定位、興趣標籤與智慧配對演算法，幫助你在安全、直覺的環境中快速找到志趣相投的對象，提升互動品質，建立有意義的連結。</p>
     </section>
 
     <!-- Match -->
-    <section id="match" class="page">
+    <section id="match" class="page" aria-live="polite">
       <h2>配對系統</h2>
       <div id="swipe-container">
-        <div class="card">使用者 A</div>
-        <div class="card">使用者 B</div>
-        <div class="card">使用者 C</div>
+        <div class="card" draggable="true">使用者 A</div>
+        <div class="card" draggable="true">使用者 B</div>
+        <div class="card" draggable="true">使用者 C</div>
       </div>
       <div class="controls">
-        <button id="dislike">👎</button>
-        <button id="like">👍</button>
+        <button id="dislike" aria-label="不喜歡">👎</button>
+        <button id="like" aria-label="喜歡">👍</button>
       </div>
     </section>
 
     <!-- Chat -->
     <section id="chat" class="page">
       <h2>即時聊天</h2>
-      <div id="chat-window"></div>
+      <div id="chat-window" aria-label="聊天訊息"></div>
       <div class="input-group">
-        <input id="msg" type="text" placeholder="輸入訊息…">
-        <button id="send">傳送</button>
+        <input id="msg" type="text" placeholder="輸入訊息…" aria-label="輸入訊息">
+        <button id="send" aria-label="傳送訊息">傳送</button>
       </div>
     </section>
 
     <!-- Profile -->
     <section id="profile" class="page">
       <h2>我的檔案</h2>
-      <form class="form-container" id="profile-form">
-        <label>名字：<input type="text" name="name" value="忠叡 蔡"></label>
-        <label>自我介紹：<textarea name="bio">這裡寫自我介紹…</textarea></label>
+      <form class="form-container" id="profile-form" novalidate>
+        <label>名字：<input type="text" name="name" required></label>
+        <label>自我介紹：<textarea name="bio" required></textarea></label>
         <button type="submit">儲存</button>
       </form>
     </section>
@@ -194,27 +191,29 @@
       <h2>篩選喜好</h2>
       <form class="form-container" id="settings-form">
         <label>性別偏好：
-          <select name="gender">
-            <option value="all">不限</option>
-            <option value="female">女性</option>
-            <option value="male">男性</option>
-          </select>
+          <select name="gender"><option value="all">不限</option><option value="female">女性</option><option value="male">男性</option></select>
         </label>
         <label>年齡範圍：
-          <input type="number" name="ageMin" placeholder="最小" style="width:45%;display:inline-block;"> –
-          <input type="number" name="ageMax" placeholder="最大" style="width:45%;display:inline-block;">
+          <input type="number" name="ageMin" placeholder="最小" min="18" max="100"> –
+          <input type="number" name="ageMax" placeholder="最大" min="18" max="100">
         </label>
         <button type="submit">儲存設定</button>
       </form>
+    </section>
+
+    <!-- Calendar -->
+    <section id="calendar" class="page">
+      <h2>活動日曆</h2>
+      <div class="calendar" id="calendar-grid"></div>
     </section>
 
     <!-- Login -->
     <section id="login" class="page">
       <div class="form-container">
         <h2>登入</h2>
-        <form>
-          <label>帳號或 Email：<input type="text" name="username"></label>
-          <label>密碼：<input type="password" name="password"></label>
+        <form id="login-form" novalidate>
+          <label>帳號或 Email：<input type="text" name="username" required></label>
+          <label>密碼：<input type="password" name="password" required></label>
           <button type="submit">登入</button>
         </form>
       </div>
@@ -224,61 +223,134 @@
     <section id="register" class="page">
       <div class="form-container">
         <h2>註冊</h2>
-        <form>
-          <label>帳號：<input type="text" name="username"></label>
-          <label>Email：<input type="email" name="email"></label>
-          <label>密碼：<input type="password" name="password"></label>
-          <label>確認密碼：<input type="password" name="confirm_password"></label>
+        <form id="register-form" novalidate>
+          <label>帳號：<input type="text" name="username" required></label>
+          <label>Email：<input type="email" name="email" required></label>
+          <label>密碼：<input type="password" name="password" pattern=".{6,}" title="至少6個字元" required></label>
+          <label>確認密碼：<input type="password" name="confirm_password" required></label>
           <button type="submit">註冊</button>
         </form>
       </div>
     </section>
-
   </main>
 
-  <footer>
-    &copy; 2025 IMEET4U. All Rights Reserved.
-  </footer>
+  <footer>&copy; 2025 IMEET4U. All Rights Reserved.</footer>
+
+  <!-- Questionnaire Modal -->
+  <div class="modal-backdrop" id="q-modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="q-title">
+      <h3 id="q-title">性格問卷</h3>
+      <form id="q-form">
+        <label>你喜歡戶外活動嗎？
+          <select name="outdoor"><option value="yes">是</option><option value="no">否</option></select>
+        </label>
+        <label>你偏好哪種類型聚會？
+          <select name="theme"><option value="sports">運動</option><option value="entertainment">娛樂</option></select>
+        </label>
+        <button type="submit">儲存問卷</button>
+        <button type="button" id="q-close">關閉</button>
+      </form>
+    </div>
+  </div>
 
   <script>
-    // SPA 切換
-    document.querySelectorAll('[data-target]').forEach(el => {
-      el.addEventListener('click', () => {
-        const tgt = el.dataset.target;
-        document.querySelectorAll('.page').forEach(p => {
-          p.classList.toggle('active', p.id === tgt);
-        });
+    // Dark mode
+    const theme = localStorage.getItem('theme')||'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('dark-toggle').onclick = () => {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const nxt = cur==='light'?'dark':'light';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('theme', nxt);
+    };
+
+    // Hash-based routing
+    function showPage(id){
+      document.querySelectorAll('.page').forEach(p=>{
+        p.classList.toggle('active', p.id===id);
+      });
+    }
+    window.addEventListener('hashchange',()=>showPage(location.hash.slice(1)));
+    document.querySelectorAll('[data-target]').forEach(el=>{
+      el.onclick = ()=>location.hash = el.dataset.target;
+    });
+    if(location.hash) showPage(location.hash.slice(1));
+    else location.hash = 'home';
+
+    // Questionnaire Modal
+    const qModal = document.getElementById('q-modal');
+    document.getElementById('q-btn').onclick = ()=> qModal.classList.add('active');
+    document.getElementById('q-close').onclick = ()=> qModal.classList.remove('active');
+    document.getElementById('q-form').onsubmit = e=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+      localStorage.setItem('questionnaire', JSON.stringify(data));
+      alert('問卷已儲存');
+      qModal.classList.remove('active');
+    };
+
+    // Simple Calendar (current month)
+    const cal = document.getElementById('calendar-grid');
+    const now = new Date(), year=now.getFullYear(), month=now.getMonth();
+    const first = new Date(year,month,1).getDay(), days=new Date(year,month+1,0).getDate();
+    ['日','一','二','三','四','五','六'].forEach(d=>{
+      const div=document.createElement('div'); div.textContent=d; div.className='header'; cal.append(div);
+    });
+    for(let i=0;i<first;i++){cal.append(document.createElement('div'));}
+    for(let d=1;d<=days;d++){
+      const div=document.createElement('div'); div.textContent=d;
+      cal.append(div);
+    }
+
+    // Drag & Swipe Cards
+    const swipeContainer = document.getElementById('swipe-container');
+    let dragEl=null, startX=0;
+    swipeContainer.querySelectorAll('.card').forEach(card=>{
+      card.addEventListener('pointerdown',e=>{
+        dragEl=card; startX=e.clientX;
+        card.setPointerCapture(e.pointerId);
+      });
+      card.addEventListener('pointermove',e=>{
+        if(!dragEl) return;
+        const dx=e.clientX-startX;
+        dragEl.style.transform=`translateX(${dx}px) rotate(${dx/10}deg)`;
+      });
+      card.addEventListener('pointerup',e=>{
+        if(!dragEl) return;
+        const dx=e.clientX-startX;
+        if(Math.abs(dx)>100){
+          dragEl.remove();
+        } else dragEl.style.transform='';
+        dragEl.releasePointerCapture(e.pointerId);
+        dragEl=null;
       });
     });
 
-    // 配對系統互動
-    const container = document.getElementById('swipe-container');
+    // Match buttons
     document.getElementById('like').onclick =
-    document.getElementById('dislike').onclick = () => {
-      const card = container.querySelector('.card');
-      if (card) container.removeChild(card);
+    document.getElementById('dislike').onclick = ()=>{
+      const c=swipeContainer.querySelector('.card');
+      if(c) c.remove();
     };
 
-    // 聊天互動
+    // Chat
     const chatWin = document.getElementById('chat-window');
-    document.getElementById('send').onclick = () => {
-      const input = document.getElementById('msg');
-      if (!input.value) return;
-      const msgDiv = document.createElement('div');
-      msgDiv.textContent = '我：' + input.value;
-      chatWin.appendChild(msgDiv);
-      input.value = '';
-      chatWin.scrollTop = chatWin.scrollHeight;
+    document.getElementById('send').onclick = ()=>{
+      const inp=document.getElementById('msg');
+      if(!inp.value) return;
+      const d=document.createElement('div'); d.textContent='我：'+inp.value;
+      chatWin.append(d); inp.value=''; chatWin.scrollTop=chatWin.scrollHeight;
     };
 
-    // 表單示意
-    document.getElementById('profile-form').addEventListener('submit', e => {
-      e.preventDefault(); alert('檔案已儲存');
-    });
-    document.getElementById('settings-form').addEventListener('submit', e => {
-      e.preventDefault(); alert('喜好設定已更新');
+    // Form validation
+    ['profile-form','settings-form','login-form','register-form'].forEach(id=>{
+      document.getElementById(id).onsubmit = e=>{
+        if(!e.target.checkValidity()){
+          e.preventDefault();
+          alert('請完整填寫並符合格式');
+        }
+      };
     });
   </script>
-
 </body>
 </html>
