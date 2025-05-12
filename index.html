@@ -91,12 +91,20 @@
     /* Footer */
     footer{text-align:center;padding:2rem 0;}
 
+    /* Debug Output */
+    #debug-output {
+      margin-top: 1rem;
+      color: #d32f2f;
+      font-size: 0.9rem;
+      word-wrap: break-word;
+    }
+
     @media(max-width:768px){header{padding:1rem;}nav a,nav button{margin-left:.75rem;font-size:.9rem;} .hero h1{font-size:2rem;} .hero p{font-size:1rem;} .features{padding:2rem 1rem;}}
   </style>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue, get } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-database.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+    import { getDatabase, ref, set, onValue, get, push } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -116,42 +124,40 @@
     const database = getDatabase(app);
 
     // 註冊函數
-    window.writedata = function() {
-      var t2 = document.getElementById("userEmail").value;
-      var t3 = document.getElementById("userPassword").value;
-      var t4 = document.getElementById("userCPassword").value;
+    window.writedata = async function() {
+      var email = document.getElementById("userEmail").value.toLowerCase().trim();
+      var password = document.getElementById("userPassword").value;
+      var confirmPassword = document.getElementById("userCPassword").value;
 
-      if (!t2 || !t3 || !t4) {
+      if (!email || !password || !confirmPassword) {
         alert("Please fill in all fields.");
         return;
       }
 
-      if (t3 !== t4) {
+      if (password !== confirmPassword) {
         alert("Passwords do not match!");
         return;
       }
 
-      createUserWithEmailAndPassword(auth, t2, t3)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          var text_id = (window.text_id || 0) + 1;
-          window.text_id = text_id;
-
-          set(ref(database, '/users/' + text_id), {
-            email: t2
-          }).then(() => {
-            alert("User registered successfully!");
-            document.getElementById("register-form").reset();
-            location.hash = "login"; // 註冊成功後跳到登入頁面
-          }).catch((error) => {
-            console.error("Error writing to database:", error);
-            alert("Failed to save user data: " + error.message);
-          });
-        })
-        .catch((error) => {
-          console.error("Error registering user:", error);
-          alert("Failed to register: " + error.message);
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        const newUserRef = push(ref(database, '/users')); // 生成唯一 ID
+        await set(newUserRef, {
+          email: email,
+          uid: user.uid
         });
+
+        // 驗證並調試
+        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+        console.log("Registration completed for", email, "UID:", user.uid, "Providers:", user.providerData, "Sign-in methods:", signInMethods);
+        alert("User registered successfully!");
+        document.getElementById("register-form").reset();
+        location.hash = "login";
+      } catch (error) {
+        console.error("Error registering user:", error);
+        alert("Failed to register: " + error.message);
+      }
     };
 
     // 讀取數據函數
@@ -161,8 +167,8 @@
         const data = snapshot.val();
         var html_text = "";
         if (data) {
-          for (let x in data) {
-            html_text += "<a href=\"#\" id=\"t" + x + "\" onClick=\"selectid(" + x + ")\">第" + x + "筆</a><ol><li id=\"z1_value_2_" + x + "\">" + data[x].email + "</li></ol><br>";
+          for (let key in data) {
+            html_text += "<a href=\"#\" id=\"t" + key + "\" onClick=\"selectid('" + key + "')\">第" + key + "筆</a><ol><li id=\"z1_value_2_" + key + "\">" + data[key].email + "</li></ol><br>";
           }
         }
       }, (error) => {
@@ -190,30 +196,26 @@
       };
     }
 
-    // 更新導航欄顯示
-    function updateNavigation(user, hasProfile, hasSurvey) {
+    // 更新導航欄顯示（暴露到全局作用域）
+    window.updateNavigation = function(user, hasProfile, hasSurvey, isLoggedIn = false) {
       const authArea = document.getElementById('auth-area');
       const userEmail = document.getElementById('user-email');
       const signOutBtn = document.getElementById('sign-out');
       const navItems = document.querySelectorAll('.nav-item');
 
-      if (user) {
+      if (user && isLoggedIn) {
         authArea.style.display = 'none';
         userEmail.textContent = user.email;
         userEmail.style.display = 'block';
         signOutBtn.style.display = 'inline-block';
 
-        // 如果已完成 Profile 和 Survey，顯示所有導航選項
         if (hasProfile && hasSurvey) {
-          navItems.forEach(item => {
-            if (item.id !== 'nav-home' && item.id !== 'nav-about') {
-              item.classList.add('visible');
-            }
-          });
+          navItems.forEach(item => item.classList.add('visible'));
         } else {
-          // 否則只顯示 Matching、Chat、Profile、Preferences、Calendar、Survey
           navItems.forEach(item => {
-            if (item.id !== 'nav-home' && item.id !== 'nav-about') {
+            if (item.id === 'nav-home' || item.id === 'nav-about') {
+              item.classList.add('visible');
+            } else {
               item.classList.remove('visible');
             }
           });
@@ -222,13 +224,9 @@
         authArea.style.display = 'flex';
         userEmail.style.display = 'none';
         signOutBtn.style.display = 'none';
-        navItems.forEach(item => {
-          if (item.id !== 'nav-home' && item.id !== 'nav-about') {
-            item.classList.remove('visible');
-          }
-        });
+        navItems.forEach(item => item.classList.remove('visible'));
       }
-    }
+    };
 
     // 登出函數
     window.signOutUser = async function() {
@@ -236,7 +234,7 @@
         await signOut(auth);
         alert("Logged out successfully!");
         location.hash = "home";
-        updateNavigation(null, false, false);
+        window.updateNavigation(null, false, false, false);
       } catch (error) {
         console.error("Error signing out:", error);
         alert("Failed to sign out: " + error.message);
@@ -245,7 +243,7 @@
 
     // 登入函數
     window.logindata = async function() {
-      var email = document.querySelector("#login-form [name='username']").value;
+      var email = document.querySelector("#login-form [name='username']").value.toLowerCase().trim();
       var password = document.querySelector("#login-form [name='password']").value;
 
       if (!email || !password) {
@@ -258,19 +256,11 @@
         const user = userCredential.user;
         alert("Login successful!");
 
-        // 檢查用戶是否已完成 Profile 和 Survey
         const { hasProfile, hasSurvey } = await checkUserProgress(user);
+        window.updateNavigation(user, hasProfile, hasSurvey, true);
 
-        // 更新導航欄
-        updateNavigation(user, hasProfile, hasSurvey);
-
-        // 清空 Profile 表單（如果需要重新填寫）
         if (!hasProfile) {
           document.getElementById("profile-form").reset();
-        }
-
-        // 跳轉邏輯
-        if (!hasProfile) {
           location.hash = "profile";
         } else if (!hasSurvey) {
           location.hash = "survey";
@@ -283,12 +273,61 @@
       }
     };
 
-    // 監聽身份狀態變化（僅用於加載資料）
+    // 重設密碼函數
+    window.resetPassword = async function() {
+      var email = document.getElementById("reset-email").value.toLowerCase().trim();
+      const debugOutput = document.getElementById("debug-output");
+      if (!email) {
+        alert("Please enter your email address.");
+        return;
+      }
+
+      try {
+        // 檢查 Realtime Database 中的用戶記錄
+        const usersRef = ref(database, '/users');
+        const snapshot = await get(usersRef);
+        let emailExists = false;
+
+        if (snapshot.exists()) {
+          const users = snapshot.val();
+          for (let key in users) {
+            if (users[key].email === email) {
+              emailExists = true;
+              break;
+            }
+          }
+        }
+
+        if (!emailExists) {
+          alert("This account does not exist in our records. Please register first.");
+          debugOutput.textContent = `Email ${email} not found in database.`;
+          return;
+        }
+
+        // 嘗試發送重設密碼郵件
+        await sendPasswordResetEmail(auth, email);
+        alert("Password reset email sent! Please check your inbox.");
+        debugOutput.textContent = "Password reset email sent successfully.";
+        document.getElementById("forgot-password-form").reset();
+        location.hash = "login";
+      } catch (error) {
+        console.error("Error:", error);
+        debugOutput.textContent = `Error: ${error.code || error.message} - Details: ${JSON.stringify(error)}`;
+        if (error.code === 'auth/invalid-email') {
+          alert("Invalid email format. Please try again.");
+        } else if (error.code === 'auth/too-many-requests') {
+          alert("Too many requests. Please try again later.");
+        } else {
+          alert("Failed to send reset email: " + error.message);
+        }
+      }
+    };
+
+    // 監聽身份狀態變化
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const { hasProfile, hasSurvey } = await checkUserProgress(user);
 
-        // 加載 Profile 資料
         const profileRef = ref(database, '/profiles/' + user.uid);
         onValue(profileRef, (snapshot) => {
           const data = snapshot.val();
@@ -298,7 +337,6 @@
           }
         });
 
-        // 加載 Survey 資料（當前為佔位符，後續根據題目更新）
         const surveyRef = ref(database, '/surveys/' + user.uid);
         onValue(surveyRef, (snapshot) => {
           const data = snapshot.val();
@@ -306,6 +344,10 @@
             // 當前無具體題目，後續可根據題目更新表單
           }
         });
+
+        window.updateNavigation(user, hasProfile, hasSurvey, false);
+      } else {
+        window.updateNavigation(null, false, false, false);
       }
     });
 
@@ -329,13 +371,11 @@
           bio: bio
         });
         alert("Profile saved successfully!");
-
-        // 檢查是否已完成 Survey
         const { hasSurvey } = await checkUserProgress(user);
         if (hasSurvey) {
-          location.hash = "home"; // 已完成 Survey，直接回到首頁
+          location.hash = "home";
         } else {
-          location.hash = "survey"; // 未完成 Survey，跳轉到 Survey
+          location.hash = "survey";
         }
       }
     };
@@ -345,13 +385,12 @@
       const user = auth.currentUser;
       if (user) {
         await set(ref(database, '/surveys/' + user.uid), {
-          completed: true // 佔位符，後續可存具體答案
+          completed: true
         });
         alert("Survey saved successfully!");
         location.hash = "home";
-        // 更新導航欄
         const { hasProfile, hasSurvey } = await checkUserProgress(user);
-        updateNavigation(user, hasProfile, hasSurvey);
+        window.updateNavigation(user, hasProfile, hasSurvey, true);
       }
     };
   </script>
@@ -373,6 +412,7 @@
       <div id="auth-area">
         <a data-target="login">Log In</a>
         <a data-target="register" class="btn-primary">Sign Up</a>
+        <a data-target="forgot-password">Forgot Password</a>
       </div>
       <div id="user-email"></div>
       <button id="sign-out" onclick="signOutUser()">Sign Out</button>
@@ -466,6 +506,7 @@
           <label>Password:<input type="password" name="password" required></label>
           <button type="submit">Log In</button>
         </form>
+        <p><a data-target="forgot-password">Forgot Password?</a></p>
       </div>
     </section>
 
@@ -479,6 +520,19 @@
           <label>Confirm Password:<input type="password" name="confirm_password" id="userCPassword" required></label>
           <button type="submit" id="sign-up-btn">Sign Up</button>
         </form>
+      </div>
+    </section>
+
+    <!-- Forgot Password -->
+    <section id="forgot-password" class="page">
+      <div class="form-container">
+        <h2>Forgot Password</h2>
+        <form id="forgot-password-form">
+          <label>Email:<input type="email" id="reset-email" required></label>
+          <button type="submit" onclick="resetPassword(); return false;">Send Reset Email</button>
+        </form>
+        <p id="debug-output"></p>
+        <p><a data-target="login">Back to Log In</a></p>
       </div>
     </section>
 
@@ -512,7 +566,9 @@
       function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
         if (id === 'login') {
-          document.getElementById('login-form').reset(); // 重置登入表單
+          document.getElementById('login-form').reset();
+        } else if (id === 'forgot-password') {
+          document.getElementById('forgot-password-form').reset();
         }
       }
       document.body.addEventListener('click', e => {
@@ -523,7 +579,7 @@
       });
       window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
       if (location.hash) showPage(location.hash.slice(1)); else location.hash = 'home';
-      
+
       // Match Controls
       document.getElementById('dislike').onclick = () => alert("Disliked!");
       document.getElementById('like').onclick = () => alert("Liked!");
@@ -561,6 +617,12 @@
         window.logindata();
       });
 
+      // Forgot Password Form Submission
+      document.getElementById('forgot-password-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        window.resetPassword();
+      });
+
       // Survey Form Submission
       document.getElementById('survey-form').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -568,7 +630,7 @@
       });
 
       // 初始設定未登入狀態
-      updateNavigation(null, false, false);
+      updateNavigation(null, false, false, false);
     };
   </script>
 </body>
