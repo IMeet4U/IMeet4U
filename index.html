@@ -78,6 +78,14 @@
     .form-container input,.form-container select,.form-container textarea{width:100%;padding:.5rem;border:1px solid #ccc;border-radius:4px;}
     .form-container button{width:100%;padding:.75rem;background:var(--color-primary);color:var(--color-light);border-radius:var(--radius);}
 
+    /* Survey Specific Styles */
+    .form-container .survey-question {margin-bottom: 1.5rem;}
+    .form-container .survey-question label {font-weight: bold; margin-bottom: 0.5rem;}
+    .form-container .survey-question div {display: flex; flex-wrap: wrap; gap: 10px;}
+    .form-container .survey-question input[type="checkbox"], 
+    .form-container .survey-question input[type="radio"] {width: auto; margin-right: 5px;}
+    .form-container .survey-question span {margin-right: 15px;}
+
     /* Modal */
     .modal-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;}
     .modal-backdrop.active{display:flex;}
@@ -323,7 +331,7 @@
       }
     };
 
-    // 監聽身份狀態變化
+    // 監聽身份狀態變化並填充 Survey 表單
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const { hasProfile, hasSurvey } = await checkUserProgress(user);
@@ -341,13 +349,52 @@
         onValue(surveyRef, (snapshot) => {
           const data = snapshot.val();
           if (data) {
-            // 當前無具體題目，後續可根據題目更新表單
+            // 填充 Survey 表單
+            // 問題 1: Favorite Sport
+            if (data.favoriteSport) {
+              data.favoriteSport.forEach(sport => {
+                document.querySelector(`input[name="favoriteSport"][value="${sport}"]`).checked = true;
+              });
+            }
+            // 問題 2: Free Time Activities
+            if (data.freeTimeActivities) {
+              data.freeTimeActivities.forEach(activity => {
+                document.querySelector(`input[name="freeTimeActivities"][value="${activity}"]`).checked = true;
+              });
+            }
+            // 問題 3: Time on Hobbies
+            if (data.timeOnHobbies) {
+              document.querySelector(`input[name="timeOnHobbies"][value="${data.timeOnHobbies}"]`).checked = true;
+            }
+            // 問題 4: Music Preference
+            if (data.musicPreference) {
+              data.musicPreference.forEach(music => {
+                document.querySelector(`input[name="musicPreference"][value="${music}"]`).checked = true;
+              });
+            }
+            // 問題 5: Book Preference
+            if (data.bookPreference) {
+              data.bookPreference.forEach(book => {
+                document.querySelector(`input[name="bookPreference"][value="${book}"]`).checked = true;
+              });
+            }
+            // 問題 6: Movie Preference
+            if (data.moviePreference) {
+              data.moviePreference.forEach(movie => {
+                document.querySelector(`input[name="moviePreference"][value="${movie}"]`).checked = true;
+              });
+            }
+            // 問題 7: Personality Rating
+            if (data.personalityRating) {
+              document.querySelector(`input[name="personalityRating"][value="${data.personalityRating}"]`).checked = true;
+            }
           }
         });
 
         window.updateNavigation(user, hasProfile, hasSurvey, false);
       } else {
         window.updateNavigation(null, false, false, false);
+        location.hash = "home"; // 未登入時跳回首頁
       }
     });
 
@@ -383,15 +430,189 @@
     // 儲存 Survey 資訊
     window.saveSurvey = async function() {
       const user = auth.currentUser;
-      if (user) {
-        await set(ref(database, '/surveys/' + user.uid), {
-          completed: true
-        });
-        alert("Survey saved successfully!");
-        location.hash = "home";
-        const { hasProfile, hasSurvey } = await checkUserProgress(user);
-        window.updateNavigation(user, hasProfile, hasSurvey, true);
+      if (!user) {
+        alert("Please log in to save your survey.");
+        return;
       }
+
+      // 收集表單答案
+      const favoriteSportInputs = document.querySelectorAll('input[name="favoriteSport"]:checked');
+      const freeTimeActivitiesInputs = document.querySelectorAll('input[name="freeTimeActivities"]:checked');
+      const timeOnHobbiesInput = document.querySelector('input[name="timeOnHobbies"]:checked');
+      const musicPreferenceInputs = document.querySelectorAll('input[name="musicPreference"]:checked');
+      const bookPreferenceInputs = document.querySelectorAll('input[name="bookPreference"]:checked');
+      const moviePreferenceInputs = document.querySelectorAll('input[name="moviePreference"]:checked');
+      const personalityRatingInput = document.querySelector('input[name="personalityRating"]:checked');
+
+      // 驗證最多選擇數量
+      if (favoriteSportInputs.length > 2) {
+        alert("Please select up to 2 options for Favorite Sport.");
+        return;
+      }
+      if (freeTimeActivitiesInputs.length > 2) {
+        alert("Please select up to 2 options for Free Time Activities.");
+        return;
+      }
+      if (!timeOnHobbiesInput) {
+        alert("Please select an option for Time Spent on Hobbies.");
+        return;
+      }
+      if (musicPreferenceInputs.length > 2) {
+        alert("Please select up to 2 options for Music Preference.");
+        return;
+      }
+      if (bookPreferenceInputs.length > 2) {
+        alert("Please select up to 2 options for Book Preference.");
+        return;
+      }
+      if (moviePreferenceInputs.length > 2) {
+        alert("Please select up to 2 options for Movie Preference.");
+        return;
+      }
+      if (!personalityRatingInput) {
+        alert("Please select an option for Personality Rating.");
+        return;
+      }
+
+      // 提取選擇的值
+      const favoriteSport = Array.from(favoriteSportInputs).map(input => input.value);
+      const freeTimeActivities = Array.from(freeTimeActivitiesInputs).map(input => input.value);
+      const timeOnHobbies = timeOnHobbiesInput.value;
+      const musicPreference = Array.from(musicPreferenceInputs).map(input => input.value);
+      const bookPreference = Array.from(bookPreferenceInputs).map(input => input.value);
+      const moviePreference = Array.from(moviePreferenceInputs).map(input => input.value);
+      const personalityRating = personalityRatingInput.value;
+
+      // 儲存到資料庫
+      await set(ref(database, '/surveys/' + user.uid), {
+        favoriteSport: favoriteSport,
+        freeTimeActivities: freeTimeActivities,
+        timeOnHobbies: timeOnHobbies,
+        musicPreference: musicPreference,
+        bookPreference: bookPreference,
+        moviePreference: moviePreference,
+        personalityRating: personalityRating,
+        completed: true
+      });
+
+      alert("Survey saved successfully!");
+      location.hash = "home";
+      const { hasProfile, hasSurvey } = await checkUserProgress(user);
+      window.updateNavigation(user, hasProfile, hasSurvey, true);
+    };
+
+    // 限制最多選擇兩個選項，需手動取消才能選新選項
+    function limitCheckboxSelection(name) {
+      const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function(e) {
+          const checkedBoxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+          if (checkedBoxes.length > 2) {
+            e.preventDefault(); // 阻止新選項被選中
+            this.checked = false; // 確保新選項未被選中
+            alert("You can only select up to 2 options. Please uncheck one option to select a new one.");
+          }
+        });
+      });
+    }
+
+    // 初始化限制邏輯
+    window.onload = function() {
+      // 限制多選題（第1、2、4、5、6題）
+      limitCheckboxSelection('favoriteSport');
+      limitCheckboxSelection('freeTimeActivities');
+      limitCheckboxSelection('musicPreference');
+      limitCheckboxSelection('bookPreference');
+      limitCheckboxSelection('moviePreference');
+
+      // Dark Mode Toggle
+      const saved = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', saved);
+      document.getElementById('dark-toggle').onclick = () => {
+        const cur = document.body.getAttribute('data-theme');
+        const nxt = cur === 'light' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', nxt);
+        localStorage.setItem('theme', nxt);
+      };
+
+      // SPA Routing
+      function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
+        if (id === 'login') {
+          document.getElementById('login-form').reset();
+        } else if (id === 'forgot-password') {
+          document.getElementById('forgot-password-form').reset();
+        } else if (id === 'survey') {
+          // 重置表單，但保留從資料庫加載的數據
+          document.getElementById('survey-form').reset();
+        }
+      }
+      document.body.addEventListener('click', e => {
+        const tgt = e.target.closest('[data-target]');
+        if (tgt) {
+          location.hash = tgt.dataset.target;
+        }
+      });
+      window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
+      if (location.hash) showPage(location.hash.slice(1)); else location.hash = "home";
+
+      // Match Controls
+      document.getElementById('dislike').onclick = () => alert("Disliked!");
+      document.getElementById('like').onclick = () => alert("Liked!");
+
+      // Chat Send Button
+      document.getElementById('send').onclick = () => {
+        const msg = document.getElementById('msg').value;
+        if (msg) {
+          const chatWindow = document.getElementById('chat-window');
+          chatWindow.innerHTML += `<p>${msg}</p>`;
+          document.getElementById('msg').value = '';
+          chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+      };
+
+      // Profile and Settings Form Submission
+      document.getElementById('profile-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        window.saveProfile();
+      });
+      document.getElementById('settings-form').onsubmit = (e) => {
+        e.preventDefault();
+        alert("Settings saved!");
+      };
+
+      // Register Form Submission
+      document.getElementById('register-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        window.writedata();
+      });
+
+      // Login Form Submission
+      document.getElementById('login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        window.logindata();
+      });
+
+      // Forgot Password Form Submission
+      document.getElementById('forgot-password-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        window.resetPassword();
+      });
+
+      // Survey Form Submission
+      document.getElementById('survey-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        window.saveSurvey();
+      });
+
+      // 初始設定未登入狀態
+      updateNavigation(null, false, false, false);
+    };
+
+    // 監聽頁面刷新並跳回首頁
+    window.onbeforeunload = function() {
+      location.hash = "home"; // 設置刷新後的默認頁面
+      signOut(auth).catch(error => console.error("Error signing out on unload:", error));
     };
   </script>
 </head>
@@ -541,7 +762,98 @@
       <h2>Personality Survey</h2>
       <div class="form-container">
         <form id="survey-form">
-          <p>Survey content will be added later.</p>
+          <!-- 問題 1: 最喜歡的運動（最多選2項，需手動取消） -->
+          <div class="survey-question">
+            <label>1. What's your favorite sport? (Select up to 2)</label>
+            <div>
+              <label><input type="checkbox" name="favoriteSport" value="Basketball"> Basketball</label>
+              <label><input type="checkbox" name="favoriteSport" value="Volleyball"> Volleyball</label>
+              <label><input type="checkbox" name="favoriteSport" value="Badminton"> Badminton</label>
+              <label><input type="checkbox" name="favoriteSport" value="Pool"> Pool</label>
+              <label><input type="checkbox" name="favoriteSport" value="Tennis"> Tennis</label>
+              <label><input type="checkbox" name="favoriteSport" value="Table Tennis"> Table Tennis</label>
+            </div>
+          </div>
+
+          <!-- 問題 2: 空閒時間喜歡做什麼（最多選2項，需手動取消） -->
+          <div class="survey-question">
+            <label>2. What do you like to do in your free time? (Select up to 2)</label>
+            <div>
+              <label><input type="checkbox" name="freeTimeActivities" value="Singing"> Singing</label>
+              <label><input type="checkbox" name="freeTimeActivities" value="Dancing"> Dancing</label>
+              <label><input type="checkbox" name="freeTimeActivities" value="Reading"> Reading</label>
+              <label><input type="checkbox" name="freeTimeActivities" value="Watching Movies"> Watching Movies</label>
+              <label><input type="checkbox" name="freeTimeActivities" value="Exercising"> Exercising</label>
+              <label><input type="checkbox" name="freeTimeActivities" value="Traveling"> Traveling</label>
+            </div>
+          </div>
+
+          <!-- 問題 3: 通常花多少時間在興趣上（單選） -->
+          <div class="survey-question">
+            <label>3. How much time do you usually spend on your hobbies? (Select one)</label>
+            <div>
+              <label><input type="radio" name="timeOnHobbies" value="Less than 1 hour"> Less than 1 hour</label>
+              <label><input type="radio" name="timeOnHobbies" value="2 hours"> 2 hours</label>
+              <label><input type="radio" name="timeOnHobbies" value="3 hours"> 3 hours</label>
+              <label><input type="radio" name="timeOnHobbies" value="More than 4 hours"> More than 4 hours</label>
+            </div>
+          </div>
+
+          <!-- 問題 4: 喜歡什麼類型的音樂（最多選2項，需手動取消） -->
+          <div class="survey-question">
+            <label>4. What kind of music do you like? (Select up to 2)</label>
+            <div>
+              <label><input type="checkbox" name="musicPreference" value="Classical"> Classical</label>
+              <label><input type="checkbox" name="musicPreference" value="Rock"> Rock</label>
+              <label><input type="checkbox" name="musicPreference" value="Pop"> Pop</label>
+              <label><input type="checkbox" name="musicPreference" value="Romantic"> Romantic</label>
+              <label><input type="checkbox" name="musicPreference" value="Love Song"> Love Song</label>
+            </div>
+          </div>
+
+          <!-- 問題 5: 喜歡什麼類型的書（最多選2項，需手動取消） -->
+          <div class="survey-question">
+            <label>5. What type of books do you like? (Select up to 2)</label>
+            <div>
+              <label><input type="checkbox" name="bookPreference" value="Romance"> Romance</label>
+              <label><input type="checkbox" name="bookPreference" value="Horror"> Horror</label>
+              <label><input type="checkbox" name="bookPreference" value="Martial Arts"> Martial Arts</label>
+              <label><input type="checkbox" name="bookPreference" value="Suspense"> Suspense</label>
+              <label><input type="checkbox" name="bookPreference" value="Fantasy"> Fantasy</label>
+              <label><input type="checkbox" name="bookPreference" value="Animation"> Animation</label>
+            </div>
+          </div>
+
+          <!-- 問題 6: 喜歡什麼類型的電影（最多選2項，需手動取消） -->
+          <div class="survey-question">
+            <label>6. What kind of movies do you like? (Select up to 2)</label>
+            <div>
+              <label><input type="checkbox" name="moviePreference" value="Romance"> Romance</label>
+              <label><input type="checkbox" name="moviePreference" value="Horror"> Horror</label>
+              <label><input type="checkbox" name="moviePreference" value="Martial Arts"> Martial Arts</label>
+              <label><input type="checkbox" name="moviePreference" value="Suspense"> Suspense</label>
+              <label><input type="checkbox" name="moviePreference" value="Fantasy"> Fantasy</label>
+              <label><input type="checkbox" name="moviePreference" value="Animation"> Animation</label>
+            </div>
+          </div>
+
+          <!-- 問題 7: 性格評分（單選） -->
+          <div class="survey-question">
+            <label>7. How would you rate your personality? (1 is more introverted and shy, 10 is more extroverted and lively)</label>
+            <div>
+              <label><input type="radio" name="personalityRating" value="1"> 1</label>
+              <label><input type="radio" name="personalityRating" value="2"> 2</label>
+              <label><input type="radio" name="personalityRating" value="3"> 3</label>
+              <label><input type="radio" name="personalityRating" value="4"> 4</label>
+              <label><input type="radio" name="personalityRating" value="5"> 5</label>
+              <label><input type="radio" name="personalityRating" value="6"> 6</label>
+              <label><input type="radio" name="personalityRating" value="7"> 7</label>
+              <label><input type="radio" name="personalityRating" value="8"> 8</label>
+              <label><input type="radio" name="personalityRating" value="9"> 9</label>
+              <label><input type="radio" name="personalityRating" value="10"> 10</label>
+            </div>
+          </div>
+
           <button type="submit" onclick="saveSurvey(); return false;">Save</button>
         </form>
       </div>
@@ -552,6 +864,13 @@
 
   <script>
     window.onload = function() {
+      // 限制多選題（第1、2、4、5、6題）
+      limitCheckboxSelection('favoriteSport');
+      limitCheckboxSelection('freeTimeActivities');
+      limitCheckboxSelection('musicPreference');
+      limitCheckboxSelection('bookPreference');
+      limitCheckboxSelection('moviePreference');
+
       // Dark Mode Toggle
       const saved = localStorage.getItem('theme') || 'light';
       document.body.setAttribute('data-theme', saved);
@@ -569,6 +888,9 @@
           document.getElementById('login-form').reset();
         } else if (id === 'forgot-password') {
           document.getElementById('forgot-password-form').reset();
+        } else if (id === 'survey') {
+          // 重置表單，但保留從資料庫加載的數據
+          document.getElementById('survey-form').reset();
         }
       }
       document.body.addEventListener('click', e => {
@@ -578,7 +900,7 @@
         }
       });
       window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
-      if (location.hash) showPage(location.hash.slice(1)); else location.hash = 'home';
+      if (location.hash) showPage(location.hash.slice(1)); else location.hash = "home";
 
       // Match Controls
       document.getElementById('dislike').onclick = () => alert("Disliked!");
@@ -631,6 +953,27 @@
 
       // 初始設定未登入狀態
       updateNavigation(null, false, false, false);
+    };
+
+    // 限制最多選擇兩個選項，需手動取消才能選新選項
+    function limitCheckboxSelection(name) {
+      const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function(e) {
+          const checkedBoxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+          if (checkedBoxes.length > 2) {
+            e.preventDefault(); // 阻止新選項被選中
+            this.checked = false; // 確保新選項未被選中
+            alert("You can only select up to 2 options. Please uncheck one option to select a new one.");
+          }
+        });
+      });
+    }
+
+    // 監聽頁面刷新並跳回首頁
+    window.onbeforeunload = function() {
+      location.hash = "home"; // 設置刷新後的默認頁面
+      signOut(auth).catch(error => console.error("Error signing out on unload:", error));
     };
   </script>
 </body>
