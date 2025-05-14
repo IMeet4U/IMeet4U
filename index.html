@@ -59,6 +59,49 @@
 
     /* About */
     #about p{max-width:600px;margin:1rem auto;line-height:1.6;}
+    .team-section {
+    max-width: 1000px;
+    margin: 30px auto;
+    text-align: center;
+    }
+
+    .team-members {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px; /* 添加間距，取代 margin，確保間距一致 */
+    }
+
+    .member {
+        flex: 1 1 200px; /* 設置每個成員卡片的最小寬度，並允許靈活調整 */
+        max-width: 220px; /* 限制最大寬度，避免過寬 */
+        margin: 10px; /* 統一外邊距 */
+        text-align: center;
+        display: flex; /* 使用 flex 來垂直對齊內容 */
+        flex-direction: column; /* 垂直排列圖片和文字 */
+        align-items: center; /* 水平居中 */
+    }
+
+    .member img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #ffcc00;
+        margin-bottom: 10px; /* 確保圖片和文字之間有間距 */
+    }
+
+    .member h3 {
+        margin: 0 0 5px; /* 調整 h3 的邊距，移除頂部多餘間距 */
+        font-size: 1.2em;
+        line-height: 1.2; /* 確保文字行高一致 */
+    }
+
+    .member p {
+        margin: 0;
+        color: #666;
+        line-height: 1.2; /* 確保文字行高一致 */
+    }
 
     /* Match */
     #match .card{background:var(--color-light);padding:2rem;margin-bottom:1rem;text-align:center;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);touch-action:pan-y;user-select:none;}
@@ -618,7 +661,8 @@
 </head>
 <body data-theme="light">
 
-  <header>
+  <header> 
+    <!-- Home function icon -->
     <div class="logo">IMEET4U</div>
     <nav>
       <a id="nav-home" data-target="home">Home</a>
@@ -649,10 +693,10 @@
         <a class="btn-primary" data-target="register">Join Now</a>
       </div>
       <div class="features">
-        <div class="feature-card" data-target="match"><img src="icons/match.svg" alt="Match Icon"><h3>Matching System</h3><p>Swipe cards to quickly find ideal matches</p></div>
-        <div class="feature-card" data-target="chat"><img src="icons/chat.svg" alt="Chat Icon"><h3>Instant Chat</h3><p>One-on-one chat for real interaction</p></div>
-        <div class="feature-card" data-target="profile"><img src="icons/profile.svg" alt="Profile Icon"><h3>Profile</h3><p>Show your true self</p></div>
-        <div class="feature-card" data-target="settings"><img src="icons/settings.svg" alt="Preferences Icon"><h3>Preferences</h3><p>Customize filters to optimize matching</p></div>
+        <div class="feature-card"><img src="MATCH.png" alt="Match Icon"><h3>Matching System</h3><p>Swipe cards to quickly find ideal matches</p></div>
+        <div class="feature-card"><img src="CHAT.png" alt="Chat Icon"><h3>Instant Chat</h3><p>One-on-one chat for real interaction</p></div>
+        <div class="feature-card"><img src="PROFILE.png" alt="Profile Icon"><h3>Profile</h3><p>Show your true self</p></div>
+        <div class="feature-card"><img src="PREFERENCE.png" alt="Preferences Icon"><h3>Preferences</h3><p>Customize filters to optimize matching</p></div>
       </div>
     </section>
 
@@ -660,6 +704,26 @@
     <section id="about" class="page">
       <h2>About Us</h2>
       <p>IMEET4U is a dating app designed for modern singles, providing powerful matching, chat, and customization features to help you connect with like-minded people.</p>
+      <h2>Meet Our Team</h2>
+      <section class="team-section">
+        <div class="team-members">
+            <div class="member">
+                <img src="Jack.jpg" alt="Guan-Yi Wu">
+                <h3>Guan-Yi Wu (Jack)</h3>
+                <p>Information Management, NTPU</p>
+            </div>
+            <div class="member">
+                <img src="Jerry.png" alt="Zhong-Rui Tsai">
+                <h3>Zhong-Rui Tsai (Jerry)</h3>
+                <p>Information Management, NTPU</p>
+            </div>
+            <div class="member">
+                <img src="Najeeb.png" alt="Najeeb Ullah">
+                <h3>Najeeb Ullah (Nur)</h3>
+                <p>Smart Healthcare and Management, NTPU</p>
+            </div>
+        </div>
+      </section>
     </section>
 
     <!-- Match -->
