@@ -14,6 +14,7 @@
       --color-light: #fff;
       --color-muted: #666;
       --radius: 8px;
+      --color-accent: #FFD700;
     }
     [data-theme="dark"] {
       --color-bg: #222;
@@ -31,12 +32,12 @@
     header{background:var(--color-light);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
     .logo{font-size:1.5rem;font-weight:bold;color:var(--color-primary);}
     nav{display:flex;align-items:center;}
-    nav a, nav button{margin-left:1rem;font-weight:500;color:var(--color-primary);}
-    .btn-primary{padding:.75rem 1.5rem;background:var(--color-primary);color:var(--color-light);border-radius:var(--radius);}
+    nav a, nav button{margin-left:1rem;font-weight:500;color:var(--color-primary);transition: color 0.3s;}
+    nav a:hover, nav button:hover {color: var(--color-secondary);}
+    .btn-primary{padding:.75rem 1.5rem;background:var(--color-primary);color:var(--color-light);border-radius:var(--radius);transition: background 0.3s;}
+    .btn-primary:hover {background: var(--color-secondary);}
     #auth-area{display:flex;align-items:center;}
     #sign-out{display:none;margin-left:1rem;font-weight:500;color:var(--color-primary);}
-    #user-menu{position:absolute;top:2.5rem;right:0;background:var(--color-light);border:1px solid #ccc;border-radius:4px;display:none;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
-    #user-menu button{width:100%;padding:.5rem 1rem;text-align:left;}
     #user-email{display:none;padding:.75rem;color:var(--color-text);}
     .nav-item{display:none;}
     .nav-item.visible{display:inline-block;}
@@ -59,54 +60,121 @@
 
     /* About */
     #about p{max-width:600px;margin:1rem auto;line-height:1.6;}
-    .team-section {
-    max-width: 1000px;
-    margin: 30px auto;
-    text-align: center;
-    }
-
-    .team-members {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        gap: 20px; /* 添加間距，取代 margin，確保間距一致 */
-    }
-
-    .member {
-        flex: 1 1 200px; /* 設置每個成員卡片的最小寬度，並允許靈活調整 */
-        max-width: 220px; /* 限制最大寬度，避免過寬 */
-        margin: 10px; /* 統一外邊距 */
-        text-align: center;
-        display: flex; /* 使用 flex 來垂直對齊內容 */
-        flex-direction: column; /* 垂直排列圖片和文字 */
-        align-items: center; /* 水平居中 */
-    }
-
-    .member img {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid #ffcc00;
-        margin-bottom: 10px; /* 確保圖片和文字之間有間距 */
-    }
-
-    .member h3 {
-        margin: 0 0 5px; /* 調整 h3 的邊距，移除頂部多餘間距 */
-        font-size: 1.2em;
-        line-height: 1.2; /* 確保文字行高一致 */
-    }
-
-    .member p {
-        margin: 0;
-        color: #666;
-        line-height: 1.2; /* 確保文字行高一致 */
-    }
+    .team-section {max-width:1000px;margin:30px auto;text-align:center;}
+    .team-members{display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px;}
+    .member{flex:1 1 200px;max-width:220px;margin:10px;text-align:center;display:flex;flex-direction:column;align-items:center;}
+    .member img{width:200px;height:200px;border-radius:50%;object-fit:cover;border:3px solid var(--color-accent);margin-bottom:10px;}
+    .member h3{margin:0 0 5px;font-size:1.2em;line-height:1.2;}
+    .member p{margin:0;color:#666;line-height:1.2;}
 
     /* Match */
-    #match .card{background:var(--color-light);padding:2rem;margin-bottom:1rem;text-align:center;border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.1);touch-action:pan-y;user-select:none;}
-    #match .controls{text-align:center;margin-top:1rem;}
-    #match .controls button{font-size:1.5rem;margin:0 .5rem;}
+    #match {padding: 2rem 5%; max-width: 1200px; margin: 0 auto;}
+    #match h2 {text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--color-primary);}
+    #match .step-header {text-align: center; margin-bottom: 1.5rem; font-size: 1.25rem; color: var(--color-muted);}
+    #match .selection-list{display:flex;gap:1rem;margin-bottom:2rem;justify-content:center;flex-wrap:wrap;}
+    #match .selection-list button{
+      padding:.75rem 1.5rem;
+      border:2px solid var(--color-primary);
+      border-radius:var(--radius);
+      background:var(--color-light);
+      color:var(--color-primary);
+      font-weight:500;
+      transition: all 0.3s;
+    }
+    #match .selection-list button:hover{
+      background:var(--color-primary);
+      color:var(--color-light);
+    }
+    #match .selection-list button.active{
+      background:var(--color-primary);
+      color:var(--color-light);
+    }
+    #match .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    #match .card{
+      background:var(--color-light);
+      padding:1.5rem;
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      text-align:center;
+      transition: transform 0.3s;
+      position: relative;
+      border-left: 5px solid var(--color-primary);
+    }
+    #match .card:hover {
+      transform: translateY(-5px);
+    }
+    #match .card h3 {
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
+    }
+    #match .card p {
+      color: var(--color-muted);
+      margin: 0.3rem 0;
+    }
+    #match button.register-btn{
+      padding:.75rem 1.5rem;
+      background:var(--color-primary);
+      color:var(--color-light);
+      border-radius:var(--radius);
+      margin-top:1rem;
+      transition: background 0.3s;
+    }
+    #match button.register-btn:hover{
+      background:var(--color-secondary);
+    }
+    #match button.register-btn:disabled{
+      background:var(--color-muted);
+      cursor:not-allowed;
+    }
+    #match button.cancel-btn{
+      padding:.75rem 1.5rem;
+      background:#ff4444;
+      color:var(--color-light);
+      border-radius:var(--radius);
+      margin-top:1rem;
+      transition: background 0.3s;
+    }
+    #match button.cancel-btn:hover{
+      background:#cc0000;
+    }
+    #match .no-events{
+      color:var(--color-muted);
+      text-align:center;
+      margin-top:1rem;
+    }
+    #match .selected-info{
+      margin-top:1rem;
+      font-weight:bold;
+      text-align:center;
+      color: var(--color-primary);
+      background: rgba(255, 107, 107, 0.1);
+      padding: 0.5rem;
+      border-radius: var(--radius);
+    }
+    #match .action-buttons{
+      display:flex;
+      justify-content:center;
+      gap:1rem;
+      margin-bottom: 2rem;
+    }
+    #match .action-buttons button{
+      padding:.75rem 1.5rem;
+      border:2px solid var(--color-secondary);
+      border-radius:var(--radius);
+      background:var(--color-light);
+      color:var(--color-secondary);
+      font-weight:500;
+      transition: all 0.3s;
+    }
+    #match .action-buttons button:hover{
+      background:var(--color-secondary);
+      color:var(--color-light);
+    }
 
     /* Chat */
     #chat #chat-window{background:var(--color-light);border:1px solid #ccc;border-radius:4px;height:300px;overflow-y:auto;padding:1rem;}
@@ -122,12 +190,11 @@
     .form-container button{width:100%;padding:.75rem;background:var(--color-primary);color:var(--color-light);border-radius:var(--radius);}
 
     /* Survey Specific Styles */
-    .form-container .survey-question {margin-bottom: 1.5rem;}
-    .form-container .survey-question label {font-weight: bold; margin-bottom: 0.5rem;}
-    .form-container .survey-question div {display: flex; flex-wrap: wrap; gap: 10px;}
-    .form-container .survey-question input[type="checkbox"], 
-    .form-container .survey-question input[type="radio"] {width: auto; margin-right: 5px;}
-    .form-container .survey-question span {margin-right: 15px;}
+    .form-container .survey-question{margin-bottom:1.5rem;}
+    .form-container .survey-question label{font-weight:bold;margin-bottom:.5rem;}
+    .form-container .survey-question div{display:flex;flex-wrap:wrap;gap:10px;}
+    .form-container .survey-question input[type="checkbox"],.form-container .survey-question input[type="radio"]{width:auto;margin-right:5px;}
+    .form-container .survey-question span{margin-right:15px;}
 
     /* Modal */
     .modal-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;}
@@ -135,29 +202,38 @@
     .modal{background:var(--color-light);padding:2rem;border-radius:var(--radius);max-width:500px;width:90%;max-height:90%;overflow:auto;}
 
     /* Calendar */
-    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
-    .calendar .header{font-weight:bold;color:var(--color-primary);}
-    .calendar div{padding:.5rem;text-align:center;border-radius:4px;background:var(--color-light);}
+    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;max-width:600px;margin:0 auto;}
+    .calendar .header{font-weight:bold;color:var(--color-primary);text-align:center;padding:.5rem;}
+    .calendar div{padding:.5rem;text-align:center;border-radius:4px;background:var(--color-light);min-height:60px;}
+    .calendar .empty{background:transparent;}
+    .calendar .today{background:#87CEEB;color:#fff;}
+    .calendar .event-day{background:#FF6B6B;}
+    .calendar .event-details{font-size:0.8rem;color:#000000;margin-top:5px;}
 
     /* Footer */
     footer{text-align:center;padding:2rem 0;}
 
     /* Debug Output */
-    #debug-output {
-      margin-top: 1rem;
-      color: #d32f2f;
-      font-size: 0.9rem;
-      word-wrap: break-word;
-    }
+    #debug-output{margin-top:1rem;color:#d32f2f;font-size:.9rem;word-wrap:break-word;}
 
-    @media(max-width:768px){header{padding:1rem;}nav a,nav button{margin-left:.75rem;font-size:.9rem;} .hero h1{font-size:2rem;} .hero p{font-size:1rem;} .features{padding:2rem 1rem;}}
+    @media(max-width:768px){
+      header{padding:1rem;}
+      nav a,nav button{margin-left:.75rem;font-size:.9rem;}
+      .hero h1{font-size:2rem;}
+      .hero p{font-size:1rem;}
+      .features{padding:2rem 1rem;}
+      #match {padding: 2rem 3%;}
+      #match .event-grid {grid-template-columns: 1fr;}
+      .calendar{max-width:100%;grid-template-columns:repeat(7,1fr);}
+      .calendar div{padding:.3rem;min-height:50px;}
+      .calendar .event-details{font-size:0.7rem;}
+    }
   </style>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue, get, push } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-database.js";
+    import { getDatabase, ref, set, onValue, get, push, update, remove } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-database.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
-    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyALscFG5EEzN5KanfiXzdw59nxh62z81OA",
       authDomain: "imeet4u-98171.firebaseapp.com",
@@ -169,12 +245,10 @@
       measurementId: "G-5LWNP5H2SP"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const database = getDatabase(app);
 
-    // 註冊函數
     window.writedata = async function() {
       var email = document.getElementById("userEmail").value.toLowerCase().trim();
       var password = document.getElementById("userPassword").value;
@@ -193,13 +267,8 @@
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        const newUserRef = push(ref(database, '/users')); // 生成唯一 ID
-        await set(newUserRef, {
-          email: email,
-          uid: user.uid
-        });
-
-        // 驗證並調試
+        const newUserRef = push(ref(database, '/users'));
+        await set(newUserRef, {email: email, uid: user.uid});
         const signInMethods = await fetchSignInMethodsForEmail(auth, email);
         console.log("Registration completed for", email, "UID:", user.uid, "Providers:", user.providerData, "Sign-in methods:", signInMethods);
         alert("User registered successfully!");
@@ -211,7 +280,6 @@
       }
     };
 
-    // 讀取數據函數
     window.selectdata = function() {
       const dbRef = ref(database, '/users');
       onValue(dbRef, (snapshot) => {
@@ -227,27 +295,19 @@
       });
     };
 
-    // 選取記錄函數
     window.selectid = function(id) {
       window.select_id = id;
       alert("Selected record: " + id);
     };
 
-    // 檢查用戶是否已完成 Profile 和 Survey
     async function checkUserProgress(user) {
       const profileRef = ref(database, '/profiles/' + user.uid);
       const surveyRef = ref(database, '/surveys/' + user.uid);
-      
       const profileSnapshot = await get(profileRef);
       const surveySnapshot = await get(surveyRef);
-      
-      return {
-        hasProfile: profileSnapshot.exists(),
-        hasSurvey: surveySnapshot.exists()
-      };
+      return {hasProfile: profileSnapshot.exists(), hasSurvey: surveySnapshot.exists()};
     }
 
-    // 更新導航欄顯示（暴露到全局作用域）
     window.updateNavigation = function(user, hasProfile, hasSurvey, isLoggedIn = false) {
       const authArea = document.getElementById('auth-area');
       const userEmail = document.getElementById('user-email');
@@ -259,7 +319,6 @@
         userEmail.textContent = user.email;
         userEmail.style.display = 'block';
         signOutBtn.style.display = 'inline-block';
-
         if (hasProfile && hasSurvey) {
           navItems.forEach(item => item.classList.add('visible'));
         } else {
@@ -279,7 +338,6 @@
       }
     };
 
-    // 登出函數
     window.signOutUser = async function() {
       try {
         await signOut(auth);
@@ -292,7 +350,6 @@
       }
     };
 
-    // 登入函數
     window.logindata = async function() {
       var email = document.querySelector("#login-form [name='username']").value.toLowerCase().trim();
       var password = document.querySelector("#login-form [name='password']").value;
@@ -306,10 +363,8 @@
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         alert("Login successful!");
-
-        const { hasProfile, hasSurvey } = await checkUserProgress(user);
+        const {hasProfile, hasSurvey} = await checkUserProgress(user);
         window.updateNavigation(user, hasProfile, hasSurvey, true);
-
         if (!hasProfile) {
           document.getElementById("profile-form").reset();
           location.hash = "profile";
@@ -324,7 +379,6 @@
       }
     };
 
-    // 重設密碼函數
     window.resetPassword = async function() {
       var email = document.getElementById("reset-email").value.toLowerCase().trim();
       const debugOutput = document.getElementById("debug-output");
@@ -334,7 +388,6 @@
       }
 
       try {
-        // 檢查 Realtime Database 中的用戶記錄
         const usersRef = ref(database, '/users');
         const snapshot = await get(usersRef);
         let emailExists = false;
@@ -355,7 +408,6 @@
           return;
         }
 
-        // 嘗試發送重設密碼郵件
         await sendPasswordResetEmail(auth, email);
         alert("Password reset email sent! Please check your inbox.");
         debugOutput.textContent = "Password reset email sent successfully.";
@@ -374,11 +426,9 @@
       }
     };
 
-    // 監聽身份狀態變化並填充 Survey 表單
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const { hasProfile, hasSurvey } = await checkUserProgress(user);
-
+        const {hasProfile, hasSurvey} = await checkUserProgress(user);
         const profileRef = ref(database, '/profiles/' + user.uid);
         onValue(profileRef, (snapshot) => {
           const data = snapshot.val();
@@ -392,59 +442,25 @@
         onValue(surveyRef, (snapshot) => {
           const data = snapshot.val();
           if (data) {
-            // 填充 Survey 表單
-            // 問題 1: Favorite Sport
-            if (data.favoriteSport) {
-              data.favoriteSport.forEach(sport => {
-                document.querySelector(`input[name="favoriteSport"][value="${sport}"]`).checked = true;
-              });
-            }
-            // 問題 2: Free Time Activities
-            if (data.freeTimeActivities) {
-              data.freeTimeActivities.forEach(activity => {
-                document.querySelector(`input[name="freeTimeActivities"][value="${activity}"]`).checked = true;
-              });
-            }
-            // 問題 3: Time on Hobbies
-            if (data.timeOnHobbies) {
-              document.querySelector(`input[name="timeOnHobbies"][value="${data.timeOnHobbies}"]`).checked = true;
-            }
-            // 問題 4: Music Preference
-            if (data.musicPreference) {
-              data.musicPreference.forEach(music => {
-                document.querySelector(`input[name="musicPreference"][value="${music}"]`).checked = true;
-              });
-            }
-            // 問題 5: Book Preference
-            if (data.bookPreference) {
-              data.bookPreference.forEach(book => {
-                document.querySelector(`input[name="bookPreference"][value="${book}"]`).checked = true;
-              });
-            }
-            // 問題 6: Movie Preference
-            if (data.moviePreference) {
-              data.moviePreference.forEach(movie => {
-                document.querySelector(`input[name="moviePreference"][value="${movie}"]`).checked = true;
-              });
-            }
-            // 問題 7: Personality Rating
-            if (data.personalityRating) {
-              document.querySelector(`input[name="personalityRating"][value="${data.personalityRating}"]`).checked = true;
-            }
+            if (data.favoriteSport) data.favoriteSport.forEach(sport => document.querySelector(`input[name="favoriteSport"][value="${sport}"]`).checked = true);
+            if (data.freeTimeActivities) data.freeTimeActivities.forEach(activity => document.querySelector(`input[name="freeTimeActivities"][value="${activity}"]`).checked = true);
+            if (data.timeOnHobbies) document.querySelector(`input[name="timeOnHobbies"][value="${data.timeOnHobbies}"]`).checked = true;
+            if (data.musicPreference) data.musicPreference.forEach(music => document.querySelector(`input[name="musicPreference"][value="${music}"]`).checked = true);
+            if (data.bookPreference) data.bookPreference.forEach(book => document.querySelector(`input[name="bookPreference"][value="${book}"]`).checked = true);
+            if (data.moviePreference) data.moviePreference.forEach(movie => document.querySelector(`input[name="moviePreference"][value="${movie}"]`).checked = true);
+            if (data.personalityRating) document.querySelector(`input[name="personalityRating"][value="${data.personalityRating}"]`).checked = true;
           }
         });
 
         window.updateNavigation(user, hasProfile, hasSurvey, false);
       } else {
         window.updateNavigation(null, false, false, false);
-        location.hash = "home"; // 未登入時跳回首頁
+        location.hash = "home";
       }
     });
 
-    // 初始加載數據
     selectdata();
 
-    // 儲存 Profile 資訊
     window.saveProfile = async function() {
       var name = document.querySelector("#profile-form [name='name']").value;
       var bio = document.querySelector("#profile-form [name='bio']").value;
@@ -456,21 +472,13 @@
 
       const user = auth.currentUser;
       if (user) {
-        await set(ref(database, '/profiles/' + user.uid), {
-          name: name,
-          bio: bio
-        });
+        await set(ref(database, '/profiles/' + user.uid), {name: name, bio: bio});
         alert("Profile saved successfully!");
-        const { hasSurvey } = await checkUserProgress(user);
-        if (hasSurvey) {
-          location.hash = "home";
-        } else {
-          location.hash = "survey";
-        }
+        const {hasSurvey} = await checkUserProgress(user);
+        if (hasSurvey) location.hash = "home"; else location.hash = "survey";
       }
     };
 
-    // 儲存 Survey 資訊
     window.saveSurvey = async function() {
       const user = auth.currentUser;
       if (!user) {
@@ -478,7 +486,6 @@
         return;
       }
 
-      // 收集表單答案
       const favoriteSportInputs = document.querySelectorAll('input[name="favoriteSport"]:checked');
       const freeTimeActivitiesInputs = document.querySelectorAll('input[name="freeTimeActivities"]:checked');
       const timeOnHobbiesInput = document.querySelector('input[name="timeOnHobbies"]:checked');
@@ -487,7 +494,6 @@
       const moviePreferenceInputs = document.querySelectorAll('input[name="moviePreference"]:checked');
       const personalityRatingInput = document.querySelector('input[name="personalityRating"]:checked');
 
-      // 驗證最多選擇數量
       if (favoriteSportInputs.length > 2) {
         alert("Please select up to 2 options for Favorite Sport.");
         return;
@@ -517,7 +523,6 @@
         return;
       }
 
-      // 提取選擇的值
       const favoriteSport = Array.from(favoriteSportInputs).map(input => input.value);
       const freeTimeActivities = Array.from(freeTimeActivitiesInputs).map(input => input.value);
       const timeOnHobbies = timeOnHobbiesInput.value;
@@ -526,7 +531,6 @@
       const moviePreference = Array.from(moviePreferenceInputs).map(input => input.value);
       const personalityRating = personalityRatingInput.value;
 
-      // 儲存到資料庫
       await set(ref(database, '/surveys/' + user.uid), {
         favoriteSport: favoriteSport,
         freeTimeActivities: freeTimeActivities,
@@ -540,35 +544,428 @@
 
       alert("Survey saved successfully!");
       location.hash = "home";
-      const { hasProfile, hasSurvey } = await checkUserProgress(user);
+      const {hasProfile, hasSurvey} = await checkUserProgress(user);
       window.updateNavigation(user, hasProfile, hasSurvey, true);
     };
 
-    // 限制最多選擇兩個選項，需手動取消才能選新選項
     function limitCheckboxSelection(name) {
       const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
       checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function(e) {
           const checkedBoxes = document.querySelectorAll(`input[name="${name}"]:checked`);
           if (checkedBoxes.length > 2) {
-            e.preventDefault(); // 阻止新選項被選中
-            this.checked = false; // 確保新選項未被選中
+            e.preventDefault();
+            this.checked = false;
             alert("You can only select up to 2 options. Please uncheck one option to select a new one.");
           }
         });
       });
     }
 
-    // 初始化限制邏輯
-    window.onload = function() {
-      // 限制多選題（第1、2、4、5、6題）
+    // 活動時間表（每個縣市都有所有活動）
+    const cities = ["Taipei", "Kaohsiung", "Taichung", "Tainan", "Hsinchu", "Taoyuan", "Keelung"];
+    const activities = [
+      { name: "Basketball", category: "Sports", locationTemplate: "%s Arena" },
+      { name: "Volleyball", category: "Sports", locationTemplate: "%s Gymnasium" },
+      { name: "Badminton", category: "Sports", locationTemplate: "%s Sports Center" },
+      { name: "Tennis", category: "Sports", locationTemplate: "%s Tennis Court" },
+      { name: "Pool", category: "Sports", locationTemplate: "%s Pool Club" },
+      { name: "Table Tennis", category: "Sports", locationTemplate: "%s Sports Hall" },
+      { name: "Singing", category: "Music", locationTemplate: "%s Cultural Center" },
+      { name: "Dancing", category: "Music", locationTemplate: "%s Performing Arts Center" }
+    ];
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const times = ["4:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM"];
+
+    const weeklyEvents = [];
+    let eventId = 1;
+    cities.forEach(city => {
+      activities.forEach((activity, activityIndex) => {
+        const day = days[eventId % days.length];
+        const time = times[eventId % times.length];
+        weeklyEvents.push({
+          id: String(eventId++),
+          name: activity.name,
+          category: activity.category,
+          day: day,
+          time: time,
+          city: city,
+          location: activity.locationTemplate.replace("%s", city)
+        });
+      });
+    });
+
+    // 儲存當前選擇的狀態
+    let selectedCity = '';
+    let selectedActivity = '';
+    let selectedEventId = '';
+    let currentStep = 'city'; // 追蹤當前步驟: 'city', 'activity', 'time'
+
+    // 初始化活動到資料庫
+    async function initializeEvents() {
+      const eventsRef = ref(database, '/eventRegistrations');
+      const snapshot = await get(eventsRef);
+      if (!snapshot.exists()) {
+        const eventsData = {};
+        const now = new Date("2025-05-18T18:01:00Z"); // 當前時間：06:01 PM CST (UTC+8)
+        weeklyEvents.forEach(event => {
+          const eventDate = getEventDate(event.day, event.time, now);
+          if (eventDate > now) {
+            eventsData[event.id] = {
+              name: event.name,
+              category: event.category,
+              day: event.day,
+              time: event.time,
+              city: event.city,
+              location: event.location,
+              maxParticipants: 20,
+              registeredUsers: {},
+              waitlist: {}
+            };
+          }
+        });
+        await set(eventsRef, eventsData);
+      }
+    }
+
+    // 獲取活動日期
+    function getEventDate(day, time, now) {
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const todayIndex = now.getDay();
+      const targetIndex = days.indexOf(day);
+      let diff = targetIndex - todayIndex;
+      if (diff < 0) diff += 7; // 下一週
+      if (diff > 14) diff -= 7; // 限制兩週內
+      const eventDate = new Date(now);
+      eventDate.setDate(now.getDate() + diff);
+      const [hours, minutes] = time.match(/\d+/g);
+      eventDate.setHours(parseInt(hours) + 8, parseInt(minutes), 0, 0); // 調整為 CST
+      return eventDate;
+    }
+
+    // 更新所選活動資訊
+    function updateSelectedInfo() {
+      const selectedInfo = document.getElementById('selected-info');
+      if (selectedCity && selectedActivity) {
+        selectedInfo.textContent = `Selected: ${selectedActivity} in ${selectedCity}`;
+      } else if (selectedCity) {
+        selectedInfo.textContent = `Selected City: ${selectedCity}`;
+      } else {
+        selectedInfo.textContent = '';
+      }
+    }
+
+    // 顯示縣市選單
+    function displayCities() {
+      currentStep = 'city';
+      selectedCity = '';
+      selectedActivity = '';
+      selectedEventId = '';
+      updateSelectedInfo();
+
+      const swipeContainer = document.getElementById('swipe-container');
+      swipeContainer.innerHTML = '';
+      const stepHeader = document.createElement('div');
+      stepHeader.className = 'step-header';
+      stepHeader.textContent = 'Step 1: Choose a City';
+      swipeContainer.appendChild(stepHeader);
+
+      const cities = [...new Set(weeklyEvents.map(event => event.city))];
+      const selectionList = document.createElement('div');
+      selectionList.className = 'selection-list';
+      cities.forEach(city => {
+        const button = document.createElement('button');
+        button.textContent = city;
+        button.onclick = () => {
+          selectedCity = city;
+          displayActivitiesByCity(city);
+          updateSelectedInfo();
+        };
+        selectionList.appendChild(button);
+      });
+      swipeContainer.appendChild(selectionList);
+    }
+
+    // 顯示特定縣市的活動
+    function displayActivitiesByCity(city) {
+      currentStep = 'activity';
+      selectedActivity = '';
+      selectedEventId = '';
+      updateSelectedInfo();
+
+      const swipeContainer = document.getElementById('swipe-container');
+      swipeContainer.innerHTML = '';
+      const stepHeader = document.createElement('div');
+      stepHeader.className = 'step-header';
+      stepHeader.textContent = 'Step 2: Choose an Activity';
+      swipeContainer.appendChild(stepHeader);
+
+      const actionButtons = document.createElement('div');
+      actionButtons.className = 'action-buttons';
+      actionButtons.innerHTML = `<button onclick="window.goBack()">Back</button>`;
+      swipeContainer.appendChild(actionButtons);
+
+      const activities = [...new Set(weeklyEvents.filter(event => event.city === city).map(event => event.name))];
+      const selectionList = document.createElement('div');
+      selectionList.className = 'selection-list';
+      activities.forEach(activity => {
+        const button = document.createElement('button');
+        button.textContent = activity;
+        button.onclick = () => {
+          selectedActivity = activity;
+          displayTimesByActivity(city, activity);
+          updateSelectedInfo();
+        };
+        selectionList.appendChild(button);
+      });
+      swipeContainer.appendChild(selectionList);
+    }
+
+    // 顯示特定活動的時間
+    async function displayTimesByActivity(city, activity) {
+      currentStep = 'time';
+      selectedEventId = '';
+      updateSelectedInfo();
+
+      const user = auth.currentUser;
+      const swipeContainer = document.getElementById('swipe-container');
+      swipeContainer.innerHTML = '';
+      const stepHeader = document.createElement('div');
+      stepHeader.className = 'step-header';
+      stepHeader.textContent = 'Step 3: Choose a Time and Register';
+      swipeContainer.appendChild(stepHeader);
+
+      const actionButtons = document.createElement('div');
+      actionButtons.className = 'action-buttons';
+      actionButtons.innerHTML = `<button onclick="window.goBack()">Back</button>`;
+      swipeContainer.appendChild(actionButtons);
+
+      const eventsRef = ref(database, '/eventRegistrations');
+      const snapshot = await get(eventsRef);
+      if (!snapshot.exists()) {
+        const noEventsMessage = document.createElement('p');
+        noEventsMessage.className = 'no-events';
+        noEventsMessage.textContent = 'No events available at the moment.';
+        swipeContainer.appendChild(noEventsMessage);
+        return;
+      }
+
+      const events = snapshot.val();
+      const now = new Date("2025-05-18T18:01:00Z");
+      const eventGrid = document.createElement('div');
+      eventGrid.className = 'event-grid';
+      for (let eventId in events) {
+        const event = events[eventId];
+        const eventDate = getEventDate(event.day, event.time, now);
+        if (event.city === city && event.name === activity && eventDate > now) {
+          const registeredCount = event.registeredUsers ? Object.keys(event.registeredUsers).length : 0;
+          const waitlistCount = event.waitlist ? Object.keys(event.waitlist).length : 0;
+          const isRegistered = user && event.registeredUsers && event.registeredUsers[user.uid];
+          const isOnWaitlist = user && event.waitlist && event.waitlist[user.uid];
+          const isFull = registeredCount >= event.maxParticipants;
+
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <h3>${event.name} - ${event.time}</h3>
+            <p>Location: ${event.location}</p>
+            <p>Day: ${event.day}</p>
+            <p>Participants: ${registeredCount}/${event.maxParticipants}</p>
+            <p>Waitlist: ${waitlistCount}</p>
+            ${user ? `
+              <button class="register-btn" onclick="registerForEvent('${eventId}')" 
+                ${isRegistered || isOnWaitlist || !user ? 'disabled' : ''}>
+                ${isRegistered ? 'Registered' : isOnWaitlist ? 'On Waitlist' : isFull ? 'Full - Join Waitlist' : 'Register'}
+              </button>
+              ${isRegistered ? `<button class="cancel-btn" onclick="cancelRegistration('${eventId}')">Cancel Registration</button>` : ''}
+            ` : `<p>Please log in to register.</p>`}
+          `;
+          eventGrid.appendChild(card);
+        }
+      }
+      swipeContainer.appendChild(eventGrid);
+    }
+
+    // 返回邏輯
+    window.goBack = function() {
+      if (currentStep === 'activity') {
+        displayCities();
+      } else if (currentStep === 'time') {
+        displayActivitiesByCity(selectedCity);
+      }
+    };
+
+    // 報名活動
+    window.registerForEvent = async function(eventId) {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Please log in to register for an event.");
+        return;
+      }
+
+      const eventRef = ref(database, `/eventRegistrations/${eventId}`);
+      const snapshot = await get(eventRef);
+      if (!snapshot.exists()) {
+        alert("Event not found.");
+        return;
+      }
+
+      const event = snapshot.val();
+      const registeredCount = event.registeredUsers ? Object.keys(event.registeredUsers).length : 0;
+      const isFull = registeredCount >= event.maxParticipants;
+
+      if (isFull) {
+        const updates = {};
+        updates[`/eventRegistrations/${eventId}/waitlist/${user.uid}`] = true;
+        await update(ref(database), updates);
+        alert("This event is full. You've been added to the waitlist.");
+      } else {
+        const updates = {};
+        updates[`/eventRegistrations/${eventId}/registeredUsers/${user.uid}`] = true;
+        await update(ref(database), updates);
+        alert("Successfully registered for the event!");
+      }
+
+      displayTimesByActivity(selectedCity, selectedActivity);
+    };
+
+    // 取消報名
+    window.cancelRegistration = async function(eventId) {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Please log in to cancel registration.");
+        return;
+      }
+
+      const eventRef = ref(database, `/eventRegistrations/${eventId}`);
+      const snapshot = await get(eventRef);
+      if (!snapshot.exists()) {
+        alert("Event not found.");
+        return;
+      }
+
+      const event = snapshot.val();
+      const updates = {};
+      updates[`/eventRegistrations/${eventId}/registeredUsers/${user.uid}`] = null;
+
+      const waitlist = event.waitlist || {};
+      const waitlistUids = Object.keys(waitlist);
+      if (waitlistUids.length > 0) {
+        const nextUser = waitlistUids[0];
+        updates[`/eventRegistrations/${eventId}/waitlist/${nextUser}`] = null;
+        updates[`/eventRegistrations/${eventId}/registeredUsers/${nextUser}`] = true;
+        alert("Your registration has been canceled. The next person on the waitlist has been notified.");
+      } else {
+        alert("Your registration has been canceled.");
+      }
+
+      await update(ref(database), updates);
+      displayTimesByActivity(selectedCity, selectedActivity);
+    };
+
+    // 顯示日曆
+    async function displayCalendar() {
+      const calendarGrid = document.getElementById('calendar-grid');
+      calendarGrid.innerHTML = '';
+
+      const now = new Date("2025-05-18T18:01:00Z"); // 當前時間：06:01 PM CST (UTC+8)
+      const year = now.getFullYear();
+      const month = now.getMonth(); // 5月 (0-based)
+      const today = now.getDate(); // 18日
+
+      // 獲取當前月份的第一天和最後一天
+      const firstDayOfMonth = new Date(year, month, 1);
+      const lastDayOfMonth = new Date(year, month + 1, 0);
+      const firstDayOfWeek = firstDayOfMonth.getDay(); // 第一天是星期幾
+      const daysInMonth = lastDayOfMonth.getDate(); // 當月總天數
+
+      // 獲取用戶報名的活動日期
+      const user = auth.currentUser;
+      const eventDays = new Map(); // 儲存活動日期和活動資訊
+      if (user) {
+        const eventsRef = ref(database, '/eventRegistrations');
+        const snapshot = await get(eventsRef);
+        if (snapshot.exists()) {
+          const events = snapshot.val();
+          for (let eventId in events) {
+            const event = events[eventId];
+            if (event.registeredUsers && event.registeredUsers[user.uid]) {
+              const eventDate = getEventDate(event.day, event.time, now);
+              const eventDay = eventDate.getDate();
+              const eventMonth = eventDate.getMonth();
+              if (eventMonth === month) { // 只顯示當前月份的活動
+                if (!eventDays.has(eventDay)) {
+                  eventDays.set(eventDay, []);
+                }
+                eventDays.get(eventDay).push(`${event.name} at ${event.time} (${event.city})`);
+              }
+            }
+          }
+        }
+      }
+
+      // 顯示星期標頭
+      const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      weekdays.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'header';
+        header.textContent = day;
+        calendarGrid.appendChild(header);
+      });
+
+      // 填充空白天數
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'empty';
+        calendarGrid.appendChild(emptyDay);
+      }
+
+      // 填充日期
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = document.createElement('div');
+        let className = '';
+        if (day === today && !eventDays.has(day)) {
+          className = 'today'; // 當天，但沒有活動
+        }
+        if (eventDays.has(day)) {
+          className = 'event-day'; // 有活動的日期
+        }
+        dayDiv.className = className;
+        dayDiv.innerHTML = `${day}`;
+        if (eventDays.has(day)) {
+          const events = eventDays.get(day);
+          events.forEach(event => {
+            const eventDetail = document.createElement('div');
+            eventDetail.className = 'event-details';
+            eventDetail.textContent = event;
+            dayDiv.appendChild(eventDetail);
+          });
+        }
+        calendarGrid.appendChild(dayDiv);
+      }
+    }
+
+    // 監聽活動更新並刷新日曆
+    function listenForEventUpdates() {
+      const eventsRef = ref(database, '/eventRegistrations');
+      onValue(eventsRef, () => {
+        if (selectedCity && selectedActivity) {
+          displayTimesByActivity(selectedCity, selectedActivity);
+        }
+        // 當活動資料更新時，重新渲染日曆
+        if (document.querySelector('#calendar.active')) {
+          displayCalendar();
+        }
+      });
+    }
+
+    window.onload = async function() {
       limitCheckboxSelection('favoriteSport');
       limitCheckboxSelection('freeTimeActivities');
       limitCheckboxSelection('musicPreference');
       limitCheckboxSelection('bookPreference');
       limitCheckboxSelection('moviePreference');
 
-      // Dark Mode Toggle
       const saved = localStorage.getItem('theme') || 'light';
       document.body.setAttribute('data-theme', saved);
       document.getElementById('dark-toggle').onclick = () => {
@@ -578,32 +975,45 @@
         localStorage.setItem('theme', nxt);
       };
 
-      // SPA Routing
       function showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
-        if (id === 'login') {
-          document.getElementById('login-form').reset();
-        } else if (id === 'forgot-password') {
-          document.getElementById('forgot-password-form').reset();
-        } else if (id === 'survey') {
-          // 重置表單，但保留從資料庫加載的數據
-          document.getElementById('survey-form').reset();
+        document.querySelectorAll('.page').forEach(p => {
+          p.classList.remove('active');
+          if (p.id === id) {
+            p.classList.add('active');
+            if (id === 'calendar') {
+              displayCalendar(); // 進入日曆頁面時渲染日曆
+            }
+          }
+        });
+        if (id === 'login') document.getElementById('login-form').reset();
+        else if (id === 'forgot-password') document.getElementById('forgot-password-form').reset();
+        else if (id === 'survey') document.getElementById('survey-form').reset();
+        else if (id === 'match') {
+          displayCities();
         }
       }
+
       document.body.addEventListener('click', e => {
         const tgt = e.target.closest('[data-target]');
         if (tgt) {
-          location.hash = tgt.dataset.target;
+          const targetPage = tgt.dataset.target;
+          location.hash = targetPage;
+          showPage(targetPage);
         }
       });
-      window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
-      if (location.hash) showPage(location.hash.slice(1)); else location.hash = "home";
 
-      // Match Controls
-      document.getElementById('dislike').onclick = () => alert("Disliked!");
-      document.getElementById('like').onclick = () => alert("Liked!");
+      window.addEventListener('hashchange', () => {
+        const pageId = location.hash.slice(1) || 'home';
+        showPage(pageId);
+      });
 
-      // Chat Send Button
+      if (location.hash) {
+        showPage(location.hash.slice(1));
+      } else {
+        location.hash = "home";
+        showPage("home");
+      }
+
       document.getElementById('send').onclick = () => {
         const msg = document.getElementById('msg').value;
         if (msg) {
@@ -614,60 +1024,54 @@
         }
       };
 
-      // Profile and Settings Form Submission
       document.getElementById('profile-form').addEventListener('submit', (e) => {
         e.preventDefault();
         window.saveProfile();
       });
-      document.getElementById('settings-form').onsubmit = (e) => {
+
+      document.getElementById('settings-form').addEventListener('submit', (e) => {
         e.preventDefault();
         alert("Settings saved!");
-      };
+      });
 
-      // Register Form Submission
       document.getElementById('register-form').addEventListener('submit', (e) => {
         e.preventDefault();
         window.writedata();
       });
 
-      // Login Form Submission
       document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
         window.logindata();
       });
 
-      // Forgot Password Form Submission
       document.getElementById('forgot-password-form').addEventListener('submit', (e) => {
         e.preventDefault();
         window.resetPassword();
       });
 
-      // Survey Form Submission
       document.getElementById('survey-form').addEventListener('submit', (e) => {
         e.preventDefault();
         window.saveSurvey();
       });
 
-      // 初始設定未登入狀態
       updateNavigation(null, false, false, false);
+      await initializeEvents();
+      listenForEventUpdates();
     };
 
-    // 監聽頁面刷新並跳回首頁
     window.onbeforeunload = function() {
-      location.hash = "home"; // 設置刷新後的默認頁面
+      location.hash = "home";
       signOut(auth).catch(error => console.error("Error signing out on unload:", error));
     };
   </script>
 </head>
 <body data-theme="light">
-
-  <header> 
-    <!-- Home function icon -->
+  <header>
     <div class="logo">IMEET4U</div>
     <nav>
       <a id="nav-home" data-target="home">Home</a>
       <a id="nav-about" data-target="about">About Us</a>
-      <a id="nav-match" class="nav-item" data-target="match">Matching</a>
+      <a id="nav-match" class="nav-item" data-target="match">Events</a>
       <a id="nav-chat" class="nav-item" data-target="chat">Chat</a>
       <a id="nav-profile" class="nav-item" data-target="profile">Profile</a>
       <a id="nav-settings" class="nav-item" data-target="settings">Preferences</a>
@@ -685,7 +1089,6 @@
   </header>
 
   <main>
-    <!-- Home -->
     <section id="home" class="page active">
       <div class="hero">
         <h1>Discover<br>Meaningful<br>Connections</h1>
@@ -693,54 +1096,46 @@
         <a class="btn-primary" data-target="register">Join Now</a>
       </div>
       <div class="features">
-        <div class="feature-card"><img src="MATCH.png" alt="Match Icon"><h3>Matching System</h3><p>Swipe cards to quickly find ideal matches</p></div>
+        <div class="feature-card"><img src="MATCH.png" alt="Match Icon"><h3>Events System</h3><p>Join weekly events to meet new people</p></div>
         <div class="feature-card"><img src="CHAT.png" alt="Chat Icon"><h3>Instant Chat</h3><p>One-on-one chat for real interaction</p></div>
         <div class="feature-card"><img src="PROFILE.png" alt="Profile Icon"><h3>Profile</h3><p>Show your true self</p></div>
         <div class="feature-card"><img src="PREFERENCE.png" alt="Preferences Icon"><h3>Preferences</h3><p>Customize filters to optimize matching</p></div>
       </div>
     </section>
 
-    <!-- About -->
     <section id="about" class="page">
       <h2>About Us</h2>
       <p>IMEET4U is a dating app designed for modern singles, providing powerful matching, chat, and customization features to help you connect with like-minded people.</p>
       <h2>Meet Our Team</h2>
       <section class="team-section">
         <div class="team-members">
-            <div class="member">
-                <img src="Jack.jpg" alt="Guan-Yi Wu">
-                <h3>Guan-Yi Wu (Jack)</h3>
-                <p>Information Management, NTPU</p>
-            </div>
-            <div class="member">
-                <img src="Jerry.png" alt="Zhong-Rui Tsai">
-                <h3>Zhong-Rui Tsai (Jerry)</h3>
-                <p>Information Management, NTPU</p>
-            </div>
-            <div class="member">
-                <img src="Najeeb.png" alt="Najeeb Ullah">
-                <h3>Najeeb Ullah (Nur)</h3>
-                <p>Smart Healthcare and Management, NTPU</p>
-            </div>
+          <div class="member">
+            <img src="Jack.jpg" alt="Guan-Yi Wu">
+            <h3>Guan-Yi Wu (Jack)</h3>
+            <p>Information Management, NTPU</p>
+          </div>
+          <div class="member">
+            <img src="Jerry.png" alt="Zhong-Rui Tsai">
+            <h3>Zhong-Rui Tsai (Jerry)</h3>
+            <p>Information Management, NTPU</p>
+          </div>
+          <div class="member">
+            <img src="Najeeb.png" alt="Najeeb Ullah">
+            <h3>Najeeb Ullah (Nur)</h3>
+            <p>Smart Healthcare and Management, NTPU</p>
+          </div>
         </div>
       </section>
     </section>
 
-    <!-- Match -->
     <section id="match" class="page">
-      <h2>Matching</h2>
+      <h2>Weekly Events</h2>
       <div id="swipe-container">
-        <div class="card">User A</div>
-        <div class="card">User B</div>
-        <div class="card">User C</div>
+        <!-- 縣市、活動、時間表將動態生成 -->
       </div>
-      <div class="controls">
-        <button id="dislike">👎</button>
-        <button id="like">👍</button>
-      </div>
+      <div id="selected-info" class="selected-info"></div>
     </section>
 
-    <!-- Chat -->
     <section id="chat" class="page">
       <h2>Chat</h2>
       <div id="chat-window"></div>
@@ -750,7 +1145,6 @@
       </div>
     </section>
 
-    <!-- Profile -->
     <section id="profile" class="page">
       <h2>My Profile</h2>
       <form class="form-container" id="profile-form">
@@ -760,7 +1154,6 @@
       </form>
     </section>
 
-    <!-- Settings -->
     <section id="settings" class="page">
       <h2>Preferences</h2>
       <form class="form-container" id="settings-form">
@@ -776,13 +1169,11 @@
       </form>
     </section>
 
-    <!-- Calendar -->
     <section id="calendar" class="page">
-      <h2>Calendar</h2>
+      <h2>Calendar - May 2025</h2>
       <div class="calendar" id="calendar-grid"></div>
     </section>
 
-    <!-- Login -->
     <section id="login" class="page">
       <div class="form-container">
         <h2>Log In</h2>
@@ -795,7 +1186,6 @@
       </div>
     </section>
 
-    <!-- Register -->
     <section id="register" class="page">
       <div class="form-container">
         <h2>Sign Up</h2>
@@ -808,7 +1198,6 @@
       </div>
     </section>
 
-    <!-- Forgot Password -->
     <section id="forgot-password" class="page">
       <div class="form-container">
         <h2>Forgot Password</h2>
@@ -821,12 +1210,10 @@
       </div>
     </section>
 
-    <!-- Survey -->
     <section id="survey" class="page">
       <h2>Personality Survey</h2>
       <div class="form-container">
         <form id="survey-form">
-          <!-- 問題 1: 最喜歡的運動（最多選2項，需手動取消） -->
           <div class="survey-question">
             <label>1. What's your favorite sport? (Select up to 2)</label>
             <div>
@@ -839,7 +1226,6 @@
             </div>
           </div>
 
-          <!-- 問題 2: 空閒時間喜歡做什麼（最多選2項，需手動取消） -->
           <div class="survey-question">
             <label>2. What do you like to do in your free time? (Select up to 2)</label>
             <div>
@@ -852,7 +1238,6 @@
             </div>
           </div>
 
-          <!-- 問題 3: 通常花多少時間在興趣上（單選） -->
           <div class="survey-question">
             <label>3. How much time do you usually spend on your hobbies? (Select one)</label>
             <div>
@@ -863,7 +1248,6 @@
             </div>
           </div>
 
-          <!-- 問題 4: 喜歡什麼類型的音樂（最多選2項，需手動取消） -->
           <div class="survey-question">
             <label>4. What kind of music do you like? (Select up to 2)</label>
             <div>
@@ -875,7 +1259,6 @@
             </div>
           </div>
 
-          <!-- 問題 5: 喜歡什麼類型的書（最多選2項，需手動取消） -->
           <div class="survey-question">
             <label>5. What type of books do you like? (Select up to 2)</label>
             <div>
@@ -888,7 +1271,6 @@
             </div>
           </div>
 
-          <!-- 問題 6: 喜歡什麼類型的電影（最多選2項，需手動取消） -->
           <div class="survey-question">
             <label>6. What kind of movies do you like? (Select up to 2)</label>
             <div>
@@ -901,7 +1283,6 @@
             </div>
           </div>
 
-          <!-- 問題 7: 性格評分（單選） -->
           <div class="survey-question">
             <label>7. How would you rate your personality? (1 is more introverted and shy, 10 is more extroverted and lively)</label>
             <div>
@@ -925,120 +1306,5 @@
   </main>
 
   <footer>© 2025 IMEET4U. All Rights Reserved.</footer>
-
-  <script>
-    window.onload = function() {
-      // 限制多選題（第1、2、4、5、6題）
-      limitCheckboxSelection('favoriteSport');
-      limitCheckboxSelection('freeTimeActivities');
-      limitCheckboxSelection('musicPreference');
-      limitCheckboxSelection('bookPreference');
-      limitCheckboxSelection('moviePreference');
-
-      // Dark Mode Toggle
-      const saved = localStorage.getItem('theme') || 'light';
-      document.body.setAttribute('data-theme', saved);
-      document.getElementById('dark-toggle').onclick = () => {
-        const cur = document.body.getAttribute('data-theme');
-        const nxt = cur === 'light' ? 'dark' : 'light';
-        document.body.setAttribute('data-theme', nxt);
-        localStorage.setItem('theme', nxt);
-      };
-
-      // SPA Routing
-      function showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
-        if (id === 'login') {
-          document.getElementById('login-form').reset();
-        } else if (id === 'forgot-password') {
-          document.getElementById('forgot-password-form').reset();
-        } else if (id === 'survey') {
-          // 重置表單，但保留從資料庫加載的數據
-          document.getElementById('survey-form').reset();
-        }
-      }
-      document.body.addEventListener('click', e => {
-        const tgt = e.target.closest('[data-target]');
-        if (tgt) {
-          location.hash = tgt.dataset.target;
-        }
-      });
-      window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
-      if (location.hash) showPage(location.hash.slice(1)); else location.hash = "home";
-
-      // Match Controls
-      document.getElementById('dislike').onclick = () => alert("Disliked!");
-      document.getElementById('like').onclick = () => alert("Liked!");
-
-      // Chat Send Button
-      document.getElementById('send').onclick = () => {
-        const msg = document.getElementById('msg').value;
-        if (msg) {
-          const chatWindow = document.getElementById('chat-window');
-          chatWindow.innerHTML += `<p>${msg}</p>`;
-          document.getElementById('msg').value = '';
-          chatWindow.scrollTop = chatWindow.scrollHeight;
-        }
-      };
-
-      // Profile and Settings Form Submission
-      document.getElementById('profile-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        window.saveProfile();
-      });
-      document.getElementById('settings-form').onsubmit = (e) => {
-        e.preventDefault();
-        alert("Settings saved!");
-      };
-
-      // Register Form Submission
-      document.getElementById('register-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        window.writedata();
-      });
-
-      // Login Form Submission
-      document.getElementById('login-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        window.logindata();
-      });
-
-      // Forgot Password Form Submission
-      document.getElementById('forgot-password-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        window.resetPassword();
-      });
-
-      // Survey Form Submission
-      document.getElementById('survey-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        window.saveSurvey();
-      });
-
-      // 初始設定未登入狀態
-      updateNavigation(null, false, false, false);
-    };
-
-    // 限制最多選擇兩個選項，需手動取消才能選新選項
-    function limitCheckboxSelection(name) {
-      const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function(e) {
-          const checkedBoxes = document.querySelectorAll(`input[name="${name}"]:checked`);
-          if (checkedBoxes.length > 2) {
-            e.preventDefault(); // 阻止新選項被選中
-            this.checked = false; // 確保新選項未被選中
-            alert("You can only select up to 2 options. Please uncheck one option to select a new one.");
-          }
-        });
-      });
-    }
-
-    // 監聽頁面刷新並跳回首頁
-    window.onbeforeunload = function() {
-      location.hash = "home"; // 設置刷新後的默認頁面
-      signOut(auth).catch(error => console.error("Error signing out on unload:", error));
-    };
-  </script>
 </body>
 </html>
